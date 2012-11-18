@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import com.jinengo.reporting.service.mapper.PersonRowMapper;
 import com.jinengo.reporting.model.UserModel;
 
+@Component
 public class PersonDao {
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
