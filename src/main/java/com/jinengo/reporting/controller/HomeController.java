@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jinengo.reporting.service.HomeService;
-import com.jinengo.reporting.service.PersonDao;
+import com.jinengo.reporting.service.user.UserDao;
 
 /**
  * Handles requests for the application home page.
@@ -17,7 +16,7 @@ import com.jinengo.reporting.service.PersonDao;
 public class HomeController {
 	
 	@Autowired
-	private PersonDao personDao;
+	private UserDao personDao;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -26,8 +25,7 @@ public class HomeController {
 	public ModelAndView hello(Model model) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
-		//model.addAttribute("myName", personDao.selectUser("Lars").get(0).getEmail() );
-		modelAndView.addObject("myName", personDao.selectUser("Lars").get(0).getEmail());
+		modelAndView.addObject("myName", personDao.selectUser("Lars").get(0).getLastName());
 		return modelAndView;
 	}
 	

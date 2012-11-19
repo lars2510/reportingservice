@@ -47,8 +47,8 @@
         </beans:property>
 	</beans:bean>
 	
-	<!-- JDBC DataSource Template Instance for HomeController -->
-	<beans:bean id="homeService" class="com.jinengo.reporting.service.HomeService">
+	<!-- JDBC DataSource Template Instance for User -->
+	<beans:bean id="userDao" class="com.jinengo.reporting.service.user.UserDao">
         <beans:property name="jdbcTemplate" ref="jdbcTemplate" />
 	</beans:bean>
 	
