@@ -12,7 +12,7 @@ public class UserResultSetExtractor implements ResultSetExtractor<UserModel> {
 	public UserModel extractData(ResultSet rs) throws SQLException {
 		UserModel user = new UserModel();
 	    user.setFirstName(rs.getString(1));
-	    user.setLastName(rs.getString(2));
+	    user.setGender(rs.getString(2));
 	    return user;
 	}
 	

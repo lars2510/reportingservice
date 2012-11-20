@@ -11,12 +11,12 @@
 	<form:form action="showuserform" commandName="userModel">
 		<table align="center">
 			<tr>
-				<td>User Name :</td>
-				<td><form:input path="userName" /></td>
+				<td>First Name :</td>
+				<td><form:input path="firstName" /></td>
 			</tr>
 			<tr>
-				<td>Email :</td>
-				<td><form:input path="email" /></td>
+				<td>Last Name :</td>
+				<td><form:input path="lastName" /></td>
 			</tr>
 			<tr>
 				<td></td>

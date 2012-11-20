@@ -21,37 +21,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- Database Configuration -->
-	<beans:bean id="propertyPlaceholderConfigurer"   
-	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-	  <beans:property name="locations">  
-	    <beans:list>  
-	      <beans:value>classpath:database.properties</beans:value>  
-	    </beans:list>  
-	  </beans:property>  
-	</beans:bean>
-	
-	<!-- Database Connection -->
-	<beans:bean id="dataSource"
-                class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <beans:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-        <beans:property name="url" value="jdbc:sqlserver://${db.ip};databaseName=${db.name}" />
-        <beans:property name="username" value="${db.user}" />
-        <beans:property name="password" value="${db.pw}" />
-	</beans:bean>
-	
-	<!-- JDBC DataSource Template -->
-	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <beans:property name="dataSource">
-                <beans:ref bean="dataSource" />
-        </beans:property>
-	</beans:bean>
-	
-	<!-- JDBC DataSource Template Instance for User -->
-	<beans:bean id="userDao" class="com.jinengo.reporting.service.user.UserDao">
-        <beans:property name="jdbcTemplate" ref="jdbcTemplate" />
-	</beans:bean>
-	
 	<context:component-scan base-package="com.jinengo.reporting" />
 	
 </beans:beans>

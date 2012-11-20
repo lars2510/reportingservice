@@ -8,9 +8,14 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+<c:forEach var="person" items="${p}">
+     ${person.firstName}
+     ${person.gender}
+     <br />
+</c:forEach>
+	 
 </h1>
 
-<P>  Hi, ich bin ${myName}. </P>
+
 </body>
 </html>

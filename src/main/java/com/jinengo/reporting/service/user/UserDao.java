@@ -18,11 +18,11 @@ public class UserDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	public List<UserModel> selectUser(String vorname) {
-		String sqlQuery = "SELECT VORNAME, NACHNAME FROM [TestLars].[dbo].[User] where VORNAME = ?";
+	public List<UserModel> selectUser(String gender) {
+		String sqlQuery = "SELECT Name, Gender FROM [JinengoDataWarehouse].[dbo].[JinengoUser] where Gender = ?";
 		
 		return jdbcTemplate.query(sqlQuery,
-			new Object[] { vorname },
+			new Object[] { gender },
 			new UserRowMapper()
 		);
 	}

@@ -4,7 +4,14 @@ public class UserModel {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String gender;
 	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

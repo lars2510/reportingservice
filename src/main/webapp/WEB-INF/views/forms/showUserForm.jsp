@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>Name: <c:out value="${user.userName}" /></p>
-	<p>Email: <c:out value="${user.email}" /></p>
+	<p>Name: <c:out value="${user.firstName}" /></p>
+	<p>Email: <c:out value="${user.lastName}" /></p>
 </body>
 </html>
