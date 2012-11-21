@@ -53,4 +53,17 @@ public class HomeController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/loggedout", method = RequestMethod.GET)
+	public String handleForm(Model model) {
+		model.addAttribute(new UserModel());
+		
+		return "loggedout";
+	}
+	
+	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
+	public String handleTimeout(Model model) {
+		model.addAttribute(new UserModel());
+		
+		return "timeout";
+	}
 }

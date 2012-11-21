@@ -30,6 +30,5 @@ public class UserModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
 }
