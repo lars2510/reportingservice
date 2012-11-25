@@ -21,9 +21,22 @@ import com.jinengo.reporting.service.user.UserDao;
 public class HomeController {
 	
 	@Autowired
-	private UserDao personDao;
+	private UserDao personDao = new UserDao();
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	public List<UserModel> selectUserList() {
+		List<UserModel> l = null;
+		try {
+			l = personDao.selectUser("1");
+			
+		} catch (IndexOutOfBoundsException e) {
+			logger.info("Fehler im: " + e.getMessage() + " BAM");
+		} catch (Exception e) {
+			logger.info("allgemeiner Fehler: " + e.getMessage());
+		}
+		return l;
+	}
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -31,24 +44,10 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView hello(Model model) {
 		
-
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
-		try {
-			List<UserModel> l = personDao.selectUser("1");
-			logger.info("Größe: " + l.size());
-			modelAndView.addObject("p", l);
-			for (int i = 0; i < l.size(); i++) {
-				UserModel m = l.get(i);
-				//modelAndView.addObject("myName", m.getFirstName());
-				//modelAndView.addObject("myGender", m.getGender());
-			}
-			
-		} catch (IndexOutOfBoundsException e) {
-			logger.info("Fehler im: " + e.getMessage() + " BAM");
-		} catch (Exception e) {
-			logger.info("allgemeiner Fehler: " + e.getMessage());
-		}
+		
+		modelAndView.addObject("p", selectUserList());
 		
 		return modelAndView;
 	}
@@ -66,4 +65,10 @@ public class HomeController {
 		
 		return "timeout";
 	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String handleTest() {
+		return "test";
+	}
+	
 }

@@ -5,6 +5,7 @@
 <html>
 <head>
 	<title>Home</title>
+	<link rel="stylesheet" href="<c:url value='/static/css/style.css'/>" type="text/css" />
 </head>
 <body>
 <h1>

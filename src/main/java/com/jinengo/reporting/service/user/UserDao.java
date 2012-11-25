@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.jinengo.reporting.model.UserModel;
 
 @Component
-public class UserDao {
+public class UserDao{
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
