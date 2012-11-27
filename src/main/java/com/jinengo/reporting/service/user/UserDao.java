@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.jinengo.reporting.model.UserModel;
+import com.jinengo.reporting.model.user.UserModel;
 
 @Component
 public class UserDao{

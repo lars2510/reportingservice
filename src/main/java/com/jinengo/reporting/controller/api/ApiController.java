@@ -1,4 +1,4 @@
-package com.jinengo.reporting.controller;
+package com.jinengo.reporting.controller.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jinengo.reporting.model.UserModel;
+import com.jinengo.reporting.model.user.UserModel;
 
 @Controller
-@RequestMapping("/user/data")
-public class JsonController {
+@RequestMapping("/api")
+public class ApiController {
 	
-	@RequestMapping(value="{firstName}", method = RequestMethod.GET)
+	@RequestMapping(value="/user/data/{firstName}", method = RequestMethod.GET)
 	public @ResponseBody UserModel postUserData(@PathVariable String firstName, @RequestParam(value="lastName", required=true) String lastName) {
  
 		UserModel user = new UserModel();

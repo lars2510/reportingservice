@@ -1,4 +1,4 @@
-package com.jinengo.reporting.controller;
+package com.jinengo.reporting.controller.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jinengo.reporting.model.UserModel;
+import com.jinengo.reporting.model.user.UserModel;
 
 @Controller
 public class FormController {

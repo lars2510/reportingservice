@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-import com.jinengo.reporting.model.UserModel;
+import com.jinengo.reporting.model.user.UserModel;
 
 public class UserResultSetExtractor implements ResultSetExtractor<UserModel> {
 

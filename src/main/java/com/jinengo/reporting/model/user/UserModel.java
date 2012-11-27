@@ -1,4 +1,4 @@
-package com.jinengo.reporting.model;
+package com.jinengo.reporting.model.user;
 
 public class UserModel {
 	private String firstName;
