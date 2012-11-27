@@ -19,10 +19,9 @@ public class UserDao{
 	}
 	
 	public List<UserModel> selectUser(String gender) {
-		String sqlQuery = "SELECT Name, Gender FROM [JinengoDataWarehouse].[dbo].[JinengoUser] where Gender = ?";
+		String sqlQuery = "SELECT ID, Name FROM [JinengoDataWarehouse].[dbo].[TransportationType]";
 		
 		return jdbcTemplate.query(sqlQuery,
-			new Object[] { gender },
 			new UserRowMapper()
 		);
 	}

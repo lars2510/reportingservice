@@ -31,6 +31,18 @@
 	<bean id="userDao" class="com.jinengo.reporting.service.user.UserDao">
         <property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.jinengo.reporting.model.user" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="dialect">org.hybernate.dialect.SQLServer2008Dialect</prop>
+			</props>
+		</property>
+	</bean>
+
+
 
     <context:property-placeholder location="classpath:database.properties"/>
 

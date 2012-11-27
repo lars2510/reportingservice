@@ -14,6 +14,20 @@
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 	</properties>
+	
+	<repositories>
+	    <repository>
+	        <id>jboss-public-repository-group</id>
+	        <url>https://repository.jboss.org/nexus/content/groups/public-jboss</url>
+	        <releases>
+	          <enabled>true</enabled>
+	        </releases>
+	        <snapshots>
+	          <enabled>true</enabled>
+	        </snapshots>
+	     </repository>
+	</repositories> 
+	
 	<dependencies>
 		<!-- Jackson JSON Mapper -->
 		<dependency>
@@ -136,6 +150,8 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
+		
+		<!-- Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -151,11 +167,31 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
 		</dependency>
+		
+		<!-- hibernate -->
+		<dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.0.1.Final</version>
+        </dependency>
+		
+		<dependency>
+	    	<groupId>org.hibernate</groupId>
+	     	<artifactId>hibernate-entitymanager</artifactId>
+	    	<version>4.0.1.Final</version>
+	    </dependency>
+
+		<dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-orm</artifactId>
+	        <version>3.1.1.RELEASE</version>
+	    </dependency>
 	</dependencies>
     <build>
         <plugins>

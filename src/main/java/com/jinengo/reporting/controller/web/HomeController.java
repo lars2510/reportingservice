@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jinengo.reporting.model.user.UserModel;
+import com.jinengo.reporting.service.user.SimpleJdbcDaoImpl;
 import com.jinengo.reporting.service.user.UserDao;
 
 /**
@@ -22,6 +25,9 @@ public class HomeController {
 	
 	@Autowired
 	private UserDao personDao = new UserDao();
+	
+	@Autowired
+	private SimpleJdbcDaoImpl simpleJdbcDaoImpl;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -71,4 +77,11 @@ public class HomeController {
 		return "test";
 	}
 	
+	@RequestMapping(value = "/simple-user", method = RequestMethod.GET)
+	public String simpleUser(Model model) {
+//		ApplicationContext ctx = new ClassPathXmlApplicationContext("database-context.xml");
+//		SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+		model.addAttribute("userdata", "Anzahl: " + simpleJdbcDaoImpl.userCount());
+		return "simpleUser";
+	}
 }
