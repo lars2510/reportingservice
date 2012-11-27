@@ -8,6 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>Name: <c:out value="${userdata}" /></p>
+
+	<c:forEach var="userdata" items="${userdata}">
+     ${userdata.id}
+     ${userdata.name}
+     <br />
+</c:forEach>
 </body>
 </html>

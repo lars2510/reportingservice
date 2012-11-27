@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jinengo.reporting.model.user.TransportationType;
 import com.jinengo.reporting.model.user.UserModel;
 import com.jinengo.reporting.service.user.SimpleJdbcDaoImpl;
 import com.jinengo.reporting.service.user.UserDao;
@@ -79,7 +80,8 @@ public class HomeController {
 	public String simpleUser(Model model) {
 //		ApplicationContext ctx = new ClassPathXmlApplicationContext("database-context.xml");
 //		SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
-		model.addAttribute("userdata", "Anzahl: " + simpleJdbcDaoImpl.userCount());
+		List<TransportationType> l = simpleJdbcDaoImpl.userCount();
+		model.addAttribute("userdata", simpleJdbcDaoImpl.userCount());
 		return "simpleUser";
 	}
 }
