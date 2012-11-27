@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TransportationType {
+public class SimpleJdbcDaoImpl {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	public int userCount() {
-		String hql = "select count(*) from SimpleUserModel";
+		String hql = "select count(*) from TransportationType";
 		Query query = getSessionFactory().openSession().createQuery(hql);
 		
 		return ((Long) query.uniqueResult()).intValue();

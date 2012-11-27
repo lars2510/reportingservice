@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class SimpleUserModel {
+public class TransportationType {
 
 	@Id
 	private int id;
@@ -22,12 +22,12 @@ public class SimpleUserModel {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public SimpleUserModel(int id, String name) {
+	public TransportationType(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	public SimpleUserModel() {
+	public TransportationType() {
 		
 	}
 	
