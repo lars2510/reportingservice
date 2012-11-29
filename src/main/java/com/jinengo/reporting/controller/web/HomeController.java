@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jinengo.reporting.model.user.AggrUserFigures;
 import com.jinengo.reporting.model.user.TransportationType;
 import com.jinengo.reporting.model.user.UserModel;
+import com.jinengo.reporting.service.user.AggrUserFiguresDao;
 import com.jinengo.reporting.service.user.SimpleJdbcDaoImpl;
 import com.jinengo.reporting.service.user.UserDao;
 
@@ -27,6 +29,9 @@ public class HomeController {
 	
 	@Autowired
 	private SimpleJdbcDaoImpl simpleJdbcDaoImpl;
+	
+	@Autowired
+	private AggrUserFiguresDao aggrUserFiguresDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -83,5 +88,16 @@ public class HomeController {
 		List<TransportationType> l = simpleJdbcDaoImpl.userCount();
 		model.addAttribute("userdata", simpleJdbcDaoImpl.userCount());
 		return "simpleUser";
+	}
+	
+	@RequestMapping(value = "/show-aggr-user", method = RequestMethod.GET)
+	public String showAggrUser(Model model) {
+//		ApplicationContext ctx = new ClassPathXmlApplicationContext("database-context.xml");
+//		SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+		
+		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers();
+
+		model.addAttribute("aggrUsers", aggrUsers);
+		return "aggrUser";
 	}
 }

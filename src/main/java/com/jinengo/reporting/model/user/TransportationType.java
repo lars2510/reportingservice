@@ -4,9 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+//@Table(name = "board")
 public class TransportationType {
 
 	@Id
+	//@Column(name = "keyword_news_id")
 	private int id;
 	private String name;
 	

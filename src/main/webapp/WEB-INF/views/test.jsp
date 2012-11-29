@@ -9,7 +9,7 @@
 	<script src="<c:url value='/resources/js/jquery.js'/>"></script>
 	<script type="text/javascript">
 		$(function() {
-			$.getJSON('api/user/data/peter', {lastName: 'meyer'}, function(data, status) {
+			$.getJSON('api/user/data/thees', {lastName: 'gieselmann'}, function(data, status) {
 				$("#user").html("Aktueller Nutzer: " + data.firstName + " " + data.lastName);	
 			});
 		});

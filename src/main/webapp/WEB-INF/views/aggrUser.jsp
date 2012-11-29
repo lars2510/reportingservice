@@ -8,10 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<c:forEach var="userdata" items="${userdata}">
-	     ${userdata.id}
-	     ${userdata.name}
+	<c:forEach var="aggrUsers" items="${aggrUsers}">
+	     ${aggrUsers.id}
+	     ${aggrUsers.year}
 	     <br />
 	</c:forEach>
 </body>
