@@ -10,6 +10,7 @@ public class AggrUserFigures {
 	
 	@Id
 	private int id;
+	private int userHistoricID;
 	private int year;
 	private int month;
 	private String transportationType;
@@ -36,11 +37,18 @@ public class AggrUserFigures {
 	private float maxEcoImpact;
 	private float avgEcoImpact;
 	private float sumEcoImpact;
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getUserHistoricID() {
+		return userHistoricID;
+	}
+	public void setUserHistoricID(int userHistoricID) {
+		this.userHistoricID = userHistoricID;
 	}
 	public int getYear() {
 		return year;
@@ -198,7 +206,7 @@ public class AggrUserFigures {
 	public void setSumEcoImpact(float sumEcoImpact) {
 		this.sumEcoImpact = sumEcoImpact;
 	}
-	public AggrUserFigures(int id, int year, int month,
+	public AggrUserFigures(int id, int userHistoricID, int year, int month,
 			String transportationType, String need, int countRoutes,
 			int countSubroutes, float minDistance, float maxDistance,
 			float avgDistance, float sumDistance, int minTime, int maxTime,
@@ -208,6 +216,7 @@ public class AggrUserFigures {
 			float maxEcoImpact, float avgEcoImpact, float sumEcoImpact) {
 		super();
 		this.id = id;
+		this.userHistoricID = userHistoricID;
 		this.year = year;
 		this.month = month;
 		this.transportationType = transportationType;

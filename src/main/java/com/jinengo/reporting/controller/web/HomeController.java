@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jinengo.reporting.model.user.AggrUserFigures;
-import com.jinengo.reporting.model.user.TransportationType;
-import com.jinengo.reporting.model.user.UserModel;
 import com.jinengo.reporting.service.user.AggrUserFiguresDao;
-import com.jinengo.reporting.service.user.SimpleJdbcDaoImpl;
-import com.jinengo.reporting.service.user.UserDao;
 
 /**
  * Handles requests for the application home page.
@@ -25,54 +21,28 @@ import com.jinengo.reporting.service.user.UserDao;
 public class HomeController {
 	
 	@Autowired
-	private UserDao personDao = new UserDao();
-	
-	@Autowired
-	private SimpleJdbcDaoImpl simpleJdbcDaoImpl;
-	
-	@Autowired
 	private AggrUserFiguresDao aggrUserFiguresDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	public List<UserModel> selectUserList() {
-		List<UserModel> l = null;
-		try {
-			l = personDao.selectUser("1");
-			
-		} catch (IndexOutOfBoundsException e) {
-			logger.info("Fehler im: " + e.getMessage() + " BAM");
-		} catch (Exception e) {
-			logger.info("allgemeiner Fehler: " + e.getMessage());
-		}
-		return l;
-	}
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView hello(Model model) {
-		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("home");
-		
-		modelAndView.addObject("p", selectUserList());
+		modelAndView.addObject("p", null);
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/loggedout", method = RequestMethod.GET)
-	public String handleForm(Model model) {
-		model.addAttribute(new UserModel());
-		
+	public String handleForm() {
 		return "loggedout";
 	}
 	
 	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
-	public String handleTimeout(Model model) {
-		model.addAttribute(new UserModel());
-		
+	public String handleTimeout() {
 		return "timeout";
 	}
 	
@@ -81,20 +51,9 @@ public class HomeController {
 		return "test";
 	}
 	
-	@RequestMapping(value = "/simple-user", method = RequestMethod.GET)
-	public String simpleUser(Model model) {
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("database-context.xml");
-//		SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
-		List<TransportationType> l = simpleJdbcDaoImpl.userCount();
-		model.addAttribute("userdata", simpleJdbcDaoImpl.userCount());
-		return "simpleUser";
-	}
 	
 	@RequestMapping(value = "/show-aggr-user", method = RequestMethod.GET)
-	public String showAggrUser(Model model) {
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext("database-context.xml");
-//		SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
-		
+	public String showAggrUser(Model model) {	
 		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers();
 
 		model.addAttribute("aggrUsers", aggrUsers);
