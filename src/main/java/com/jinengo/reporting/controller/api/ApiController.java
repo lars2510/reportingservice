@@ -14,12 +14,21 @@ import com.jinengo.reporting.model.user.AggrUserFigures;
 import com.jinengo.reporting.model.user.UserModel;
 import com.jinengo.reporting.service.user.AggrUserFiguresDao;
 
+/**
+ * Jinengo REST-API to deliver BI-Data to Client Applications via JSON-Response
+ * 
+ * Every URL Request {BaseUrl}/api is mapped to this controller
+ * @author larsschuttemeyer
+ *
+ */
 @Controller
 @RequestMapping("/api")
 public class ApiController {
+	
 	@Autowired
 	private AggrUserFiguresDao aggrUserFiguresDao;
 	
+	/** Example **/
 	@RequestMapping(value="/user/data/{firstName}", method = RequestMethod.GET)
 	public @ResponseBody UserModel postUserData(@PathVariable String firstName, @RequestParam(value="lastName", required=true) String lastName) {
  
@@ -32,18 +41,31 @@ public class ApiController {
 	 	return user;
 	}
 
+	/**
+	 * Deliver all aggregated user figures as JSON-Response
+	 * 
+	 * @return List<AggrUserFigures>
+	 */
 	@RequestMapping(value = "/user/chartdata", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigures> chartData() {	
+		
 		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers();
-
+		
 		return aggrUsers;
 	}
 	
+	/**
+	 * Deliver aggregated user figures by user id and key figure
+	 * 
+	 * @param userId
+	 * @param keyFigure
+	 * @return List<AggrUserFigures>
+	 */
 	@RequestMapping(value = "/user/chartdata/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> chartData(@PathVariable String userId, @RequestParam(value="keyFigure") String keyFigure) {	
+	public @ResponseBody List<AggrUserFigures> chartData(@PathVariable String userId, @RequestParam(value="keyFigure") String keyFigure) {			
 		
-		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers(userId, keyFigure);
-
+		 List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers(userId, keyFigure);
+		
 		return aggrUsers;
 	}
 	

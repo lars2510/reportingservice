@@ -26,37 +26,46 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * Mapping root url to home view an display welcome page
+	 * 
+	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView hello(Model model) {
+	public ModelAndView hello() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("p", null);
+		modelAndView.setViewName("home");
 		
 		return modelAndView;
 	}
 	
+	/**
+	 * Mapping loggedout url to loggedout view
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/loggedout", method = RequestMethod.GET)
 	public String handleForm() {
 		return "loggedout";
 	}
 	
+	/**
+	 * Mapping timeout url timeout view
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
 	public String handleTimeout() {
 		return "timeout";
-	}
+	}	
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String handleTest() {
-		return "test";
-	}
-	
-	
+	/**
+	 * Example Chart to show aggr user data from api
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/show-aggr-user", method = RequestMethod.GET)
-	public String showAggrUser(Model model) {	
-		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers();
-
-		model.addAttribute("aggrUsers", aggrUsers);
+	public String showAggrUser() {
 		return "aggrUser";
 	}
 }

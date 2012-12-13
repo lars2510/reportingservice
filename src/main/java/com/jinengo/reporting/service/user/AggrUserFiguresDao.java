@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.jinengo.reporting.model.user.AggrUserFigures;
@@ -18,6 +19,7 @@ import com.jinengo.reporting.model.user.AggrUserFigures;
 public class AggrUserFiguresDao {
 	
 	@Autowired
+	@Qualifier("sessionFactoryDW")
 	private SessionFactory sessionFactory;
 
 	public List<AggrUserFigures> getAggrUsers() {

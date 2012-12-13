@@ -12,11 +12,13 @@
 		</param-value>
 	</context-param>
 
+	<!-- Activate Spring Security -->
  	<filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
 
+	<!-- Check all Urls if permission is required -->
     <filter-mapping>
       <filter-name>springSecurityFilterChain</filter-name>
       <url-pattern>/*</url-pattern>
@@ -35,7 +37,7 @@
       <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
     </listener>
 
-	<!-- Processes application requests -->
+	<!-- Main Spring Servlet, handles all requests  -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -46,13 +48,10 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 		
+	<!-- Map all Urls to be handled by app Servlet -->
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
 
 </web-app>

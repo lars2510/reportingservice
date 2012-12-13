@@ -8,21 +8,34 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     
-    <!-- Scans within the base package of the application for @Components to configure as beans -->
+    
+    <!-- Scans within the jinengo reporting package for @Components to configure as beans -->
     <context:component-scan base-package="com.jinengo.reporting" />
     
-	<!-- Database Connection -->
-	<bean id="dataSource"
+    <!-- User Properties file for Database Properties like IP and DB-Name -->
+    <context:property-placeholder location="classpath:database.properties"/>
+    
+	<!-- Database Connection to Data-Warehouse -->
+	<bean id="dataSourceDW"
                 class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-        <property name="url" value="jdbc:sqlserver://${db.ip};databaseName=${db.name}" />
-        <property name="username" value="${db.user}" />
-        <property name="password" value="${db.pw}" />
+        <property name="url" value="jdbc:sqlserver://${dw.ip};databaseName=${dw.name}" />
+        <property name="username" value="${dw.user}" />
+        <property name="password" value="${dw.pw}" />
 	</bean>
 	
-	<!-- Hibernate -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+	<!-- Database Connection to CRM -->
+	<bean id="dataSourceCRM"
+                class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="url" value="jdbc:sqlserver://${dw.ip};databaseName=${dw.name}" />
+        <property name="username" value="${dw.user}" />
+        <property name="password" value="${dw.pw}" />
+	</bean>
+	
+	<!-- Hibernate Connection with MS SQL Dialect to Data-Warehouse -->
+	<bean id="sessionFactoryDW" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceDW" />
 		<property name="packagesToScan" value="com.jinengo.reporting.model.user" />
 		<property name="hibernateProperties">
 			<props>
@@ -31,6 +44,15 @@
 		</property>
 	</bean>
 	
-    <context:property-placeholder location="classpath:database.properties"/>
+	<!-- Hibernate Connection with MS SQL Dialect to CRM -->
+	<bean id="sessionFactoryCRM" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceCRM" />
+		<property name="packagesToScan" value="com.jinengo.reporting.model.user" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="dialect">org.hybernate.dialect.SQLServer2008Dialect</prop>
+			</props>
+		</property>
+	</bean>
 
 </beans>
