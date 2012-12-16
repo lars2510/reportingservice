@@ -47,12 +47,12 @@
     <authentication-manager>
         <authentication-provider>
         	<jdbc-user-service data-source-ref="dataSourceCRM"
- 
-			   users-by-username-query="SELECT UserEmail, UserPassword from UserAuthentication where UserEmail=?" 
+ 				
+			   users-by-username-query="SELECT UserEmail, UserPassword, 'true' FROM [JinengoOperationalCRM].[dbo].[UserAuthentication] where UserEmail=?" 
 	 
-			   authorities-by-username-query="SELECT u.UserEmail, ur.UserRole from UserAuthentication u, UserAuthenticationRoles ur 
-			      where u.UserEmail = ur.UserEmail and u.UserEmail =?" 
+			   authorities-by-username-query="SELECT UserEmail, UserRole FROM [JinengoOperationalCRM].[dbo].[UserAuthentication] where UserEmail =?" 
 			/>
+			<password-encoder ref="encoder"/>
            	<!-- <password-encoder ref="encoder"/>
             <user-service>
                 <user name="lars" password="4efe081594ce25ee4efd9f7067f7f678a347bccf2de201f3adf2a3eb544850b465b4e51cdc3fcdde" authorities="supervisor, user, teller" />
