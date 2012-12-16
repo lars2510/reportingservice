@@ -28,9 +28,9 @@
 	<bean id="dataSourceCRM"
                 class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-        <property name="url" value="jdbc:sqlserver://${dw.ip};databaseName=${dw.name}" />
-        <property name="username" value="${dw.user}" />
-        <property name="password" value="${dw.pw}" />
+        <property name="url" value="jdbc:sqlserver://${crm.ip};databaseName=${crm.name}" />
+        <property name="username" value="${crm.user}" />
+        <property name="password" value="${crm.pw}" />
 	</bean>
 	
 	<!-- Hibernate Connection with MS SQL Dialect to Data-Warehouse -->
