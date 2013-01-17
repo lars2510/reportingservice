@@ -4,8 +4,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Insert title here</title>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Nachhaltige Mobilität</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="<c:url value='/resources/css/normalize.css'/>" type="text/css" />
 		<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" type="text/css" />
 		<script type="text/javascript" src="<c:url value='/resources/js/lib/jquery.min.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/resources/js/lib/highcharts.js'/>"></script>
@@ -13,6 +18,12 @@
 		<script type="text/javascript" src="<c:url value='/resources/js/chart.js'/>"></script>
 	</head>
 	<body>
+		<ul>
+			<li class="chart-button" data-type="avgEcoImpact">EcoImpact</li>
+			<li class="chart-button" data-type="avgTime">Time</li>
+			<li></li>
+			<li></li>
+		</ul>
 		<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 	</body>
 </html>

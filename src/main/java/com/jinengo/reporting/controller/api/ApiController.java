@@ -39,19 +39,6 @@ public class ApiController {
 	
 	@Autowired
 	private UserAuthenticationDao userAuthenticationDao;
-	
-	/** Example **/
-	@RequestMapping(value="/user/data/{firstName}", method = RequestMethod.GET)
-	public @ResponseBody UserModel postUserData(@PathVariable String firstName, @RequestParam(value="lastName", required=true) String lastName) {
- 
-		UserModel user = new UserModel();
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setEmail(firstName + "@" + lastName + ".de");
-		user.setGender("m");
-		
-	 	return user;
-	}
 
 	/**
 	 * Deliver all aggregated user figures as JSON-Response
@@ -76,7 +63,7 @@ public class ApiController {
 	@RequestMapping(value = "/user/chartdata/{userId}", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigures> chartData(@PathVariable String userId, @RequestParam(value="keyFigure") String keyFigure) {			
 		
-		 List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers(userId, keyFigure);
+		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers(userId, keyFigure);
 		
 		return aggrUsers;
 	}
@@ -96,8 +83,8 @@ public class ApiController {
     }
 	
 
-	@RequestMapping(value = "/user/saveOrUpdate", method = RequestMethod.POST)
-    public String saveOrUpdate(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
+	@RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
+    public String savePassword(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
 		
 		if (result.hasErrors()) {
 			List<ObjectError> err = result.getAllErrors();
@@ -110,12 +97,11 @@ public class ApiController {
 			String passwordEncoded = encoder.encode(userModel.getUserPassword());
 			userModel.setUserPassword(passwordEncoded);
 			userModel.setUserRole("supervisor");
-			userAuthenticationDao.saveOrUpdate(userModel);
+			userAuthenticationDao.saveAuthModel(userModel);
 			
 			return "success";
 		}
 		
-            //Logic to save data from userForm
     }
 	
 }
