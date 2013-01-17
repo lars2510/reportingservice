@@ -1,5 +1,6 @@
 package com.jinengo.reporting.controller.api;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -39,19 +40,6 @@ public class ApiController {
 	
 	@Autowired
 	private UserAuthenticationDao userAuthenticationDao;
-
-	/**
-	 * Deliver all aggregated user figures as JSON-Response
-	 * 
-	 * @return List<AggrUserFigures>
-	 */
-	@RequestMapping(value = "/user/chartdata", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> chartData() {	
-		
-		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers();
-		
-		return aggrUsers;
-	}
 	
 	/**
 	 * Deliver aggregated user figures by user id and key figure
@@ -60,12 +48,12 @@ public class ApiController {
 	 * @param keyFigure
 	 * @return List<AggrUserFigures>
 	 */
-	@RequestMapping(value = "/user/chartdata/{userId}", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> chartData(@PathVariable String userId, @RequestParam(value="keyFigure") String keyFigure) {			
+	@RequestMapping(value = "/user/chartdata", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigures> chartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
 		
-		List<AggrUserFigures> aggrUsers = aggrUserFiguresDao.getAggrUsers(userId, keyFigure);
+		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getKeyFigures(principal.getName(), keyFigure);
 		
-		return aggrUsers;
+		return keyFigures;
 	}
 	
 	/**

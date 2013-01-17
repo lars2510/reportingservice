@@ -97,10 +97,8 @@ function initHandler(userId) {
 }
 
 $(function () {
-	var userId = 6682;
+	var userId = 2;
 	
 	initHandler(userId);
-	
-
-    
+	   
 });

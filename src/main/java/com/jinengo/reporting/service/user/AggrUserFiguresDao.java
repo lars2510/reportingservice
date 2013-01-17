@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.jinengo.reporting.model.user.AggrUserFigures;
+import com.jinengo.reporting.model.user.JinengoUser;
 
 
 @Repository
@@ -20,27 +21,39 @@ public class AggrUserFiguresDao {
 	
 	@Autowired
 	@Qualifier("sessionFactoryDW")
-	private SessionFactory sessionFactory;
+	private SessionFactory sessionFactoryDw;
+	
+	@Autowired
+	@Qualifier("sessionFactoryCRM")
+	private SessionFactory sessionFactoryCrm;
+	
+	public int getUserIdByEmail(String userEmail) {
+		// open session
+		Session s = getSessionFactoryCrm().openSession();
+		
+		// create criteria
+		Criteria crit = s.createCriteria(JinengoUser.class);
 
-	public List<AggrUserFigures> getAggrUsers() {
-		String hql = "from AggrUserFigures";
-		Query query = getSessionFactory().openSession().createQuery(hql);
+		// select user by mail
+		crit.add( Restrictions.eq("email", userEmail) );
 		
-		List<AggrUserFigures> aggrUsers = query.list();
+		JinengoUser user = (JinengoUser) crit.list().get(0);
 		
-		return aggrUsers;
+		return user.getId();
 	}
 	
-	public List<AggrUserFigures> getAggrUsers(String userId, String keyFigure) {
+	public List<AggrUserFigures> getKeyFigures(String userEmail, String keyFigure) {
 		
 		// open session
-		Session s = getSessionFactory().openSession();
+		Session s = getSessionFactoryDw().openSession();
 		
-		// add table for sql criteria
+		// create criteria
 		Criteria crit = s.createCriteria(AggrUserFigures.class);
 		
+		int userId = getUserIdByEmail(userEmail);
+		System.out.println(userId);
 		// select user
-		crit.add( Restrictions.eq("userHistoricID", Integer.parseInt(userId)) );
+		crit.add( Restrictions.eq("jinengoUserID", userId) );
 		
 		// group by year and month and set keyFigure e.g. avgEcoImpact
 		crit.setProjection( Projections.projectionList()
@@ -54,12 +67,19 @@ public class AggrUserFiguresDao {
 		return res;
 	}
 	
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+	public SessionFactory getSessionFactoryCrm() {
+		return sessionFactoryCrm;
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	public void setSessionFactoryCrm(SessionFactory sessionFactoryCrm) {
+		this.sessionFactoryCrm = sessionFactoryCrm;
+	}
+	
+	public SessionFactory getSessionFactoryDw() {
+		return sessionFactoryDw;
 	}
 
+	public void setSessionFactoryDw(SessionFactory sessionFactoryDw) {
+		this.sessionFactoryDw = sessionFactoryDw;
+	}
 }
