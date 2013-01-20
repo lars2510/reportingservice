@@ -18,12 +18,14 @@
 		<script type="text/javascript" src="<c:url value='/resources/js/chart.js'/>"></script>
 	</head>
 	<body>
-		<ul>
+		<ul class="nav">
 			<li class="chart-button" data-type="avgEcoImpact">EcoImpact</li>
+			<li class="chart-button" data-type="avgCosts">Costs</li>
+			<li class="chart-button" data-type="avgDistance">Distance</li>
 			<li class="chart-button" data-type="avgTime">Time</li>
-			<li></li>
-			<li></li>
+			<li class="chart-button" data-type="avgTimeUsable">TimeUsable</li>
 		</ul>
+		<div id="loader"></div>
 		<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 	</body>
 </html>

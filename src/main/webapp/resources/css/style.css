@@ -2,6 +2,18 @@ body {
 	color: #555;
 }
 
+.nav {
+	margin-left: 15px;
+}
+
+#loader {
+	width: 32px;
+	height: 32px;
+	background-image: url('../img/loading.gif');
+	margin: 100px auto;
+	display: none;
+}
+
 .chart-button {
 	cursor: pointer;
 	background-color: #8c9cbf;

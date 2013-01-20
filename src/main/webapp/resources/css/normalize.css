@@ -295,15 +295,15 @@ dd {
 menu,
 ol,
 ul {
-    padding: 0 0 0 40px;
+    padding: 0 0 0 0;
 }
 
 /*
  * Corrects list images handled incorrectly in IE 7.
  */
 
-nav ul,
-nav ol {
+ul,
+ol {
     list-style: none;
     list-style-image: none;
 }
