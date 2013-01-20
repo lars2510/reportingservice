@@ -1,6 +1,12 @@
-function getData(userId, keyFigure) {
-	$.getJSON('api/user/chartdata/' + userId, {keyFigure: keyFigure}, function(data, status) {
-		createChart(data);
+function getPlatformData(userData, keyFigure) {
+	$.getJSON('api/platform/figures', {keyFigure: keyFigure}, function(platformData, status) {
+		createChart(userData, platformData);
+	});
+}
+	
+function getUserData(keyFigure) {
+	$.getJSON('api/user/figures', {keyFigure: keyFigure}, function(userData, status) {
+		getPlatformData(userData, keyFigure);
 	});
 }
 
@@ -26,16 +32,25 @@ function handleData(data) {
 	return resArray;
 }
 
-function createChart(data) {
+function createChart(userData, platformData) {
 	var dataCategories = [],
-		dataUser = [];
+		dataUser = [],
+		dataPlatform = [];
 	
-	for (key in data) {
-		dataCategories.push(data[key][1] + "-" + data[key][2]);
-		dataUser.push(data[key][0]);
+	for (key in userData) {
+		dataCategories.push(userData[key][1] + "-" + userData[key][2]);
+		dataUser.push(userData[key][0]);
+		if (platformData[key]) {
+			dataPlatform.push(platformData[key][0]);
+		} else {
+			dataPlatform.push(0);
+		}
 	}
-	console.log(data);
+	console.log(userData);
+	console.log(platformData);
 	console.log(dataUser);
+	console.log(dataPlatform);
+	
 	var chart = new Highcharts.Chart({
         chart: {
             renderTo: 'container',
@@ -84,21 +99,20 @@ function createChart(data) {
                 radius: 4
             }
         }, {
-            name: 'Referenzgruppe',
-            data: [15000, 21000, 18000]
+            name: 'Durchschnitt',
+            data: dataPlatform
         }]
     });
 }
 
-function initHandler(userId) {
+function initHandler() {
 	$(".chart-button").click(function() {
-		getData(userId, $(this).data('type'));
+		getUserData($(this).data('type'));
 	});
 }
 
 $(function () {
-	var userId = 2;
 	
-	initHandler(userId);
-	   
+	initHandler();
+	    
 });

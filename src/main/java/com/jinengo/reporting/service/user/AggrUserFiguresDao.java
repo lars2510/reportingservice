@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.jinengo.reporting.model.user.AggrPlatformFigures;
 import com.jinengo.reporting.model.user.AggrUserFigures;
 import com.jinengo.reporting.model.user.JinengoUser;
 
@@ -44,16 +45,34 @@ public class AggrUserFiguresDao {
 	
 	public List<AggrUserFigures> getKeyFigures(String userEmail, String keyFigure) {
 		
-		// open session
 		Session s = getSessionFactoryDw().openSession();
-		
-		// create criteria
 		Criteria crit = s.createCriteria(AggrUserFigures.class);
 		
 		int userId = getUserIdByEmail(userEmail);
-		System.out.println(userId);
+		
 		// select user
 		crit.add( Restrictions.eq("jinengoUserID", userId) );
+		
+		crit.add( Restrictions.eq("year", 2012) );
+		
+		// group by year and month and set keyFigure e.g. avgEcoImpact
+		crit.setProjection( Projections.projectionList()
+	        .add( Projections.sum(keyFigure), keyFigure )
+	        .add( Projections.groupProperty("year"), "year" )
+	        .add( Projections.groupProperty("month"), "month" )
+	    );
+		
+		List<AggrUserFigures> res = crit.list();
+		
+		return res;
+	}
+	
+	public List<AggrUserFigures> getPlattformKeyFigures(String keyFigure) {
+		
+		Session s = getSessionFactoryDw().openSession();
+		Criteria crit = s.createCriteria(AggrPlatformFigures.class);
+		
+		crit.add( Restrictions.eq("year", 2012) );
 		
 		// group by year and month and set keyFigure e.g. avgEcoImpact
 		crit.setProjection( Projections.projectionList()

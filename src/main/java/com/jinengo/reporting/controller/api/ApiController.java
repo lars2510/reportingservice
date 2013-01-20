@@ -48,10 +48,24 @@ public class ApiController {
 	 * @param keyFigure
 	 * @return List<AggrUserFigures>
 	 */
-	@RequestMapping(value = "/user/chartdata", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/figures", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigures> chartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
 		
 		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getKeyFigures(principal.getName(), keyFigure);
+		
+		return keyFigures;
+	}
+	
+	/**
+	 * Deliver aggregated platform figures by key figure
+	 * 
+	 * @param keyFigure
+	 * @return List<AggrUserFigures>
+	 */
+	@RequestMapping(value = "/platform/figures", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigures> plattformChartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
+		
+		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getPlattformKeyFigures(keyFigure);
 		
 		return keyFigures;
 	}
