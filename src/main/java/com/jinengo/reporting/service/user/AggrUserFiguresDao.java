@@ -43,7 +43,7 @@ public class AggrUserFiguresDao {
 		return user.getId();
 	}
 	
-	public List<AggrUserFigures> getKeyFigures(String userEmail, String keyFigure) {
+	public List<AggrUserFigures> getKeyFigures(String userEmail, String keyFigure, int year) {
 		
 		Session s = getSessionFactoryDw().openSession();
 		Criteria crit = s.createCriteria(AggrUserFigures.class);
@@ -53,7 +53,7 @@ public class AggrUserFiguresDao {
 		// select user
 		crit.add( Restrictions.eq("jinengoUserID", userId) );
 		
-		crit.add( Restrictions.eq("year", 2012) );
+		crit.add( Restrictions.eq("year", year) );
 		
 		// group by year and month and set keyFigure e.g. avgEcoImpact
 		crit.setProjection( Projections.projectionList()

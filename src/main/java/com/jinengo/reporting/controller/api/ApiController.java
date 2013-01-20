@@ -34,13 +34,13 @@ import com.jinengo.reporting.service.user.UserAuthenticationDao;
 @Controller
 @RequestMapping("/api")
 public class ApiController {
-	
+
 	@Autowired
 	private AggrUserFiguresDao aggrUserFiguresDao;
-	
+
 	@Autowired
 	private UserAuthenticationDao userAuthenticationDao;
-	
+
 	/**
 	 * Deliver aggregated user figures by user id and key figure
 	 * 
@@ -49,13 +49,16 @@ public class ApiController {
 	 * @return List<AggrUserFigures>
 	 */
 	@RequestMapping(value = "/user/figures", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> chartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
-		
-		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getKeyFigures(principal.getName(), keyFigure);
-		
+	public @ResponseBody List<AggrUserFigures> chartData(
+			@RequestParam(value="keyFigure", required = false, defaultValue = "avgEcoImpact") String keyFigure, 
+			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
+			Principal principal) {			
+
+		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getKeyFigures(principal.getName(), keyFigure, Integer.parseInt(year));
+
 		return keyFigures;
 	}
-	
+
 	/**
 	 * Deliver aggregated platform figures by key figure
 	 * 
@@ -64,12 +67,12 @@ public class ApiController {
 	 */
 	@RequestMapping(value = "/platform/figures", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigures> plattformChartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
-		
+
 		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getPlattformKeyFigures(keyFigure);
-		
+
 		return keyFigures;
 	}
-	
+
 	/**
 	 * Create new User
 	 * 
@@ -79,15 +82,15 @@ public class ApiController {
 	 */
 	@RequestMapping(value = "/user/create", method = RequestMethod.GET)
 	public String addUser(Model model) {
-        
-        model.addAttribute("userModel", model.addAttribute(new UserAuthenticationModel()));
-        return "forms/createUserForm";
-    }
-	
+
+		model.addAttribute("userModel", model.addAttribute(new UserAuthenticationModel()));
+		return "forms/createUserForm";
+	}
+
 
 	@RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
-    public String savePassword(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
-		
+	public String savePassword(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
+
 		if (result.hasErrors()) {
 			List<ObjectError> err = result.getAllErrors();
 			for (int i = 0; i < err.size(); i++) {
@@ -100,10 +103,10 @@ public class ApiController {
 			userModel.setUserPassword(passwordEncoded);
 			userModel.setUserRole("supervisor");
 			userAuthenticationDao.saveAuthModel(userModel);
-			
+
 			return "success";
 		}
-		
-    }
-	
+
+	}
+
 }

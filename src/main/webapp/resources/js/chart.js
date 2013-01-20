@@ -1,21 +1,21 @@
-var JinengoChart = {
+JinengoChart = function(keyFigure, chartYear, chartText) {
 	
 	// get user data for a given figure
-	getUserData: function (keyFigure) {
-		$.getJSON('api/user/figures', {keyFigure: keyFigure}, function(userData, status) {
-			JinengoChart.getPlatformData(userData, keyFigure);
+	this.getUserData = function () {
+		$.getJSON('api/user/figures', {keyFigure: keyFigure, year: chartYear}, function(userData, status) {
+			getPlatformData(userData);
 		});
-	},
+	};
 	
 	// get data for overall platform user for a given figure
-	getPlatformData: function (userData, keyFigure) {
-		$.getJSON('api/platform/figures', {keyFigure: keyFigure}, function(platformData, status) {
-			JinengoChart.prepareData(userData, platformData);
+	var getPlatformData = function (userData) {
+		$.getJSON('api/platform/figures', {keyFigure: keyFigure, year: chartYear}, function(platformData, status) {
+			prepareData(userData, platformData);
 		});
-	},
+	};
 	
 	// prepare data to draw chart and set graph description
-	prepareData: function (userData, platformData) {
+	var prepareData = function (userData, platformData) {
 		var dataCategories = [],
 			dataUser = [],
 			dataPlatform = [];
@@ -29,14 +29,14 @@ var JinengoChart = {
 				dataPlatform.push(0);
 			}
 		}
-		var chart = JinengoChart.createChart(dataUser, dataPlatform, dataCategories);
-	},
-	
-	// Draw chart with jinengo api data
-	createChart: function(dataUser, dataPlatform, dataCategories) {
 		$('#loader').hide();
 		$('#container').show();
-		return new Highcharts.Chart({
+		createChart(dataUser, dataPlatform, dataCategories);
+	};
+	
+	// Draw chart with jinengo api data
+	var createChart = function(dataUser, dataPlatform, dataCategories) {
+		new Highcharts.Chart({
 	        chart: {
 	            renderTo: 'container',
 	            type: 'line',
@@ -44,7 +44,7 @@ var JinengoChart = {
 	            marginBottom: 25
 	        },
 	        title: {
-	            text: 'Eco-Impact Jinengo User im Vergleich zur Referenzgruppe',
+	            text: chartText + ' im Vergleich zum Durchschnitt',
 	            x: -20 //center
 	        },
 	        subtitle: {
@@ -56,7 +56,7 @@ var JinengoChart = {
 	        },
 	        yAxis: {
 	            title: {
-	                text: 'Eco-Impact'
+	                text: chartText
 	            },
 	            plotLines: [{
 	                value: 0,
@@ -88,16 +88,20 @@ var JinengoChart = {
 	            data: dataPlatform
 	        }]
 	    });
-	}
+	};
 };
 
 
 $(function () {
-	// init click event listener
+	// init event listener
 	$(".chart-button").click(function() {
 		$('#loader').show();
 		$('#container').hide();
-		JinengoChart.getUserData($(this).data('type'));
+		var jinengoChart = new JinengoChart($(this).data('type'), '2012', $(this).text());
+		jinengoChart.getUserData();
 	});
-	    
+	
+	// init start chart @params: figure, year, description
+	var jinengoChart = new JinengoChart('avgEcoImpact', '2012', 'Eco-Impact');
+	jinengoChart.getUserData();
 });

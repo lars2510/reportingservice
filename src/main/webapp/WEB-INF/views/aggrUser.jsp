@@ -19,11 +19,11 @@
 	</head>
 	<body>
 		<ul class="nav">
-			<li class="chart-button" data-type="avgEcoImpact">EcoImpact</li>
-			<li class="chart-button" data-type="avgCosts">Costs</li>
-			<li class="chart-button" data-type="avgDistance">Distance</li>
-			<li class="chart-button" data-type="avgTime">Time</li>
-			<li class="chart-button" data-type="avgTimeUsable">TimeUsable</li>
+			<li class="chart-button" data-type="avgEcoImpact">Eco-Impact</li>
+			<li class="chart-button" data-type="avgCosts">Kosten</li>
+			<li class="chart-button" data-type="avgDistance">Entfernung</li>
+			<li class="chart-button" data-type="avgTime">Reisezeit</li>
+			<li class="chart-button" data-type="avgTimeUsable">Nutzbare Zeit</li>
 		</ul>
 		<div id="loader"></div>
 		<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
