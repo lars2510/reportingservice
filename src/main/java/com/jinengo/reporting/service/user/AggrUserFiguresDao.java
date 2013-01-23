@@ -25,30 +25,22 @@ public class AggrUserFiguresDao {
 	private SessionFactory sessionFactoryDw;
 	
 	@Autowired
-	@Qualifier("sessionFactoryCRM")
-	private SessionFactory sessionFactoryCrm;
+	private UserAuthenticationDao userAuthenticationDao;
 	
-	public int getUserIdByEmail(String userEmail) {
-		// open session
-		Session s = getSessionFactoryCrm().openSession();
-		
-		// create criteria
-		Criteria crit = s.createCriteria(JinengoUser.class);
-
-		// select user by mail
-		crit.add( Restrictions.eq("email", userEmail) );
-		
-		JinengoUser user = (JinengoUser) crit.list().get(0);
-		
-		return user.getId();
-	}
-	
+	/**
+	 * Average user figures for a given year, grouped by month
+	 * 
+	 * @param userEmail
+	 * @param keyFigure
+	 * @param year
+	 * @return list - list of user figures
+	 */
 	public List<AggrUserFigures> getKeyFigures(String userEmail, String keyFigure, int year) {
 		
 		Session s = getSessionFactoryDw().openSession();
 		Criteria crit = s.createCriteria(AggrUserFigures.class);
 		
-		int userId = getUserIdByEmail(userEmail);
+		int userId = userAuthenticationDao.getUserIdByEmail(userEmail);
 		
 		// select user
 		crit.add( Restrictions.eq("jinengoUserID", userId) );
@@ -67,12 +59,19 @@ public class AggrUserFiguresDao {
 		return res;
 	}
 	
-	public List<AggrUserFigures> getPlattformKeyFigures(String keyFigure) {
+	/**
+	 * Average platform figures for a given year, grouped by month
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @return list - list of avg platform figures
+	 */
+	public List<AggrPlatformFigures> getPlatformKeyFigures(String keyFigure, int year) {
 		
 		Session s = getSessionFactoryDw().openSession();
 		Criteria crit = s.createCriteria(AggrPlatformFigures.class);
 		
-		crit.add( Restrictions.eq("year", 2012) );
+		crit.add( Restrictions.eq("year", year) );
 		
 		// group by year and month and set keyFigure e.g. avgEcoImpact
 		crit.setProjection( Projections.projectionList()
@@ -81,18 +80,36 @@ public class AggrUserFiguresDao {
 	        .add( Projections.groupProperty("month"), "month" )
 	    );
 		
-		List<AggrUserFigures> res = crit.list();
+		List<AggrPlatformFigures> res = crit.list();
 		
 		return res;
 	}
 	
-	public SessionFactory getSessionFactoryCrm() {
-		return sessionFactoryCrm;
-	}
-
-	public void setSessionFactoryCrm(SessionFactory sessionFactoryCrm) {
-		this.sessionFactoryCrm = sessionFactoryCrm;
-	}
+	/**
+	 * Get key figures for each transportation type
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @param month
+	 * @return list - list of key figures
+	 */
+	public List<AggrPlatformFigures> getPlatformTransportation(String keyFigure, int year, int month) {
+		
+		Session s = getSessionFactoryDw().openSession();
+		Criteria crit = s.createCriteria(AggrPlatformFigures.class);
+		
+		if( month > 0 ) {
+			crit.add( Restrictions.eq("year", year) );
+		} else {
+			crit.add( Restrictions.eq("year", year) );
+			crit.add( Restrictions.eq("month", month) );
+			crit.setProjection(Projections.property(keyFigure));
+		}
+		
+		List<AggrPlatformFigures> res = crit.list();
+		
+		return res;
+	}	
 	
 	public SessionFactory getSessionFactoryDw() {
 		return sessionFactoryDw;

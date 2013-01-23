@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "AggrPlatformFigures")
+@Table(name = "V_AggrPlatformFigures")
 public class AggrPlatformFigures {
 	
 	@Id

@@ -3,26 +3,16 @@ package com.jinengo.reporting.controller.api;
 import java.security.Principal;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.jinengo.reporting.model.user.AggrPlatformFigures;
 import com.jinengo.reporting.model.user.AggrUserFigures;
-import com.jinengo.reporting.model.user.UserAuthenticationModel;
-import com.jinengo.reporting.model.user.UserModel;
 import com.jinengo.reporting.service.user.AggrUserFiguresDao;
-import com.jinengo.reporting.service.user.UserAuthenticationDao;
 
 /**
  * Jinengo REST-API to deliver BI-Data to Client Applications via JSON-Response
@@ -37,9 +27,6 @@ public class ApiController {
 
 	@Autowired
 	private AggrUserFiguresDao aggrUserFiguresDao;
-
-	@Autowired
-	private UserAuthenticationDao userAuthenticationDao;
 
 	/**
 	 * Deliver aggregated user figures by user id and key figure
@@ -63,50 +50,33 @@ public class ApiController {
 	 * Deliver aggregated platform figures by key figure
 	 * 
 	 * @param keyFigure
-	 * @return List<AggrUserFigures>
+	 * @return List<AggrPlatformFigures>
 	 */
 	@RequestMapping(value = "/platform/figures", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> plattformChartData(@RequestParam(value="keyFigure") String keyFigure, Principal principal) {			
+	public @ResponseBody List<AggrPlatformFigures> platformFigures(
+			@RequestParam(value="keyFigure", required = false, defaultValue = "avgEcoImpact") String keyFigure, 
+			@RequestParam(value="year", required = false, defaultValue = "2012") String year) {			
 
-		List<AggrUserFigures> keyFigures = aggrUserFiguresDao.getPlattformKeyFigures(keyFigure);
+		List<AggrPlatformFigures> keyFigures = aggrUserFiguresDao.getPlatformKeyFigures(keyFigure, Integer.parseInt(year));
 
 		return keyFigures;
 	}
 
 	/**
-	 * Create new User
+	 * Deliver aggregated platform transportation
 	 * 
-	 * @param userEmail
-	 * @param userPassword
-	 * @return List<AggrUserFigures>
+	 * @param keyFigure
+	 * @return List<AggrPlatformFigures>
 	 */
-	@RequestMapping(value = "/user/create", method = RequestMethod.GET)
-	public String addUser(Model model) {
+	@RequestMapping(value = "/platform/transportation", method = RequestMethod.GET)
+	public @ResponseBody List<AggrPlatformFigures> platformTransportation(
+			@RequestParam(value="keyFigure", required = false, defaultValue = "avgEcoImpact") String keyFigure, 
+			@RequestParam(value="year", required = false, defaultValue = "2012") String year,
+			@RequestParam(value="month", required = false, defaultValue = "0") String month) {			
 
-		model.addAttribute("userModel", model.addAttribute(new UserAuthenticationModel()));
-		return "forms/createUserForm";
-	}
+		List<AggrPlatformFigures> keyFigures = aggrUserFiguresDao.getPlatformTransportation(keyFigure, Integer.parseInt(year), Integer.parseInt(month));
 
-
-	@RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
-	public String savePassword(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
-
-		if (result.hasErrors()) {
-			List<ObjectError> err = result.getAllErrors();
-			for (int i = 0; i < err.size(); i++) {
-				System.out.println(err.get(i).getDefaultMessage());
-			}
-			return "forms/createUserForm";
-		} else {
-			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
-			String passwordEncoded = encoder.encode(userModel.getUserPassword());
-			userModel.setUserPassword(passwordEncoded);
-			userModel.setUserRole("supervisor");
-			userAuthenticationDao.saveAuthModel(userModel);
-
-			return "success";
-		}
-
+		return keyFigures;
 	}
 
 }

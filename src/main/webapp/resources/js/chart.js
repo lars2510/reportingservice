@@ -12,17 +12,23 @@ JinengoChart = function(keyFigure, chartYear, chartText) {
 		$.getJSON('api/platform/figures', {keyFigure: keyFigure, year: chartYear}, function(platformData, status) {
 			prepareData(userData, platformData);
 		});
-	};
+	};	  
 	
 	// prepare data to draw chart and set graph description
 	var prepareData = function (userData, platformData) {
 		var dataCategories = [],
 			dataUser = [],
-			dataPlatform = [];
+			dataPlatform = [],
+			monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 		
 		for (key in userData) {
-			dataCategories.push(userData[key][2] + "-" + userData[key][1]);
+			// convert month integer 1-12 to Jan-Dez
+			dataCategories.push(monthList[userData[key][2] - 1]);
+			
+			// save property value for user
 			dataUser.push(userData[key][0]);
+			
+			// save property value for platform avg
 			if (platformData[key]) {
 				dataPlatform.push(platformData[key][0]);
 			} else {
@@ -45,10 +51,10 @@ JinengoChart = function(keyFigure, chartYear, chartText) {
 	        },
 	        title: {
 	            text: chartText + ' im Vergleich zum Durchschnitt',
-	            x: -20 //center
+	            x: -20
 	        },
 	        subtitle: {
-	            text: 'Monatsansicht',
+	            text: 'Monatsansicht für das Jahr ' + chartYear,
 	            x: -20
 	        },
 	        xAxis: {
@@ -91,8 +97,9 @@ JinengoChart = function(keyFigure, chartYear, chartText) {
 	};
 };
 
-
+// DOM ready, init chart
 $(function () {
+	
 	// init event listener
 	$(".chart-button").click(function() {
 		$('#loader').show();
@@ -104,4 +111,5 @@ $(function () {
 	// init start chart @params: figure, year, description
 	var jinengoChart = new JinengoChart('avgEcoImpact', '2012', 'Eco-Impact');
 	jinengoChart.getUserData();
+	
 });

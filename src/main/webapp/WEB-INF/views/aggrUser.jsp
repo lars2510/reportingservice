@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<ul class="nav">
-			<li class="chart-button" data-type="avgEcoImpact">Eco-Impact</li>
+			<li class="chart-button" data-type="avgEcoImpact">CO2-Emission</li>
 			<li class="chart-button" data-type="avgCosts">Kosten</li>
 			<li class="chart-button" data-type="avgDistance">Entfernung</li>
 			<li class="chart-button" data-type="avgTime">Reisezeit</li>
@@ -27,5 +27,7 @@
 		</ul>
 		<div id="loader"></div>
 		<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+			<p><c:url value="/j_spring_security_logout" var="logoutUrl" />
+<a href="${logoutUrl}">Log Out</a></p>
 	</body>
 </html>
