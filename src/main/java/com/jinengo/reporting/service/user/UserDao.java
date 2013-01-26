@@ -17,7 +17,7 @@ import com.jinengo.reporting.model.user.JinengoUser;
 import com.jinengo.reporting.model.user.UserAuthenticationModel;
 
 @Repository
-public class UserAuthenticationDao {
+public class UserDao {
 	
 	@Autowired
 	@Qualifier("sessionFactoryCRM")
@@ -29,9 +29,11 @@ public class UserAuthenticationDao {
 	 * Get user id from jinengo database by email
 	 * 
 	 * @param userEmail
-	 * @return id - jinengo user id
+	 * @return id - jinengo user id, -1 if no id is mapped to email
 	 */
-	public int getUserIdByEmail(String userEmail) {
+	public int getUserId(String userEmail) {
+		int id = -1;
+		
 		// open session
 		Session s = getSessionFactory().openSession();
 		
@@ -41,9 +43,37 @@ public class UserAuthenticationDao {
 		// select user by mail
 		crit.add( Restrictions.eq("email", userEmail) );
 		
-		JinengoUser user = (JinengoUser) crit.list().get(0);
+		if(crit.list().size() == 1) { 
+			JinengoUser user = (JinengoUser) crit.list().get(0);
+			id = user.getId();
+		}
 		
-		return user.getId();
+		return id;
+	}
+	
+	/**
+	 * Get user details from jinengo database by email
+	 * 
+	 * @param userEmail
+	 * @return JinengoUser - jinengo user details, null if no user was found
+	 */
+	public JinengoUser getUserDetails(String userEmail) {
+		JinengoUser user = null;
+		
+		// open session
+		Session s = getSessionFactory().openSession();
+		
+		// create criteria
+		Criteria crit = s.createCriteria(JinengoUser.class);
+
+		// select user by mail
+		crit.add( Restrictions.eq("email", userEmail) );
+		
+		if(crit.list().size() == 1) { 
+			user = (JinengoUser) crit.list().get(0);
+		}
+		
+		return user;
 	}
 	
 	@Transactional

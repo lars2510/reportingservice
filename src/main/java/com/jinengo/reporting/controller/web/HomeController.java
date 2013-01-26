@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jinengo.reporting.service.user.AggrUserFiguresDao;
+import com.jinengo.reporting.service.user.UserFiguresDao;
 
 /**
  * Handles requests for the application home page.
@@ -17,7 +17,7 @@ import com.jinengo.reporting.service.user.AggrUserFiguresDao;
 public class HomeController {
 	
 	@Autowired
-	private AggrUserFiguresDao aggrUserFiguresDao;
+	private UserFiguresDao aggrUserFiguresDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	

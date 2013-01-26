@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jinengo.reporting.model.user.UserAuthenticationModel;
-import com.jinengo.reporting.service.user.UserAuthenticationDao;
+import com.jinengo.reporting.service.user.UserDao;
 
 @Controller
 public class FormController {
 
 	@Autowired
-	private UserAuthenticationDao userAuthenticationDao;
+	private UserDao userAuthenticationDao;
 	
 	/**
 	 * Create new User
@@ -50,7 +50,7 @@ public class FormController {
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 			String passwordEncoded = encoder.encode(userModel.getUserPassword());
 			userModel.setUserPassword(passwordEncoded);
-			userModel.setUserRole("supervisor");
+			userModel.setUserRole("user");
 			userAuthenticationDao.saveAuthModel(userModel);
 
 			return "success";

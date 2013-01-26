@@ -9,7 +9,7 @@
 <title>User erstellen</title>
 </head>
 <body>
-	<c:url var="savePassword" value="/api/user/savePassword" />
+	<c:url var="savePassword" value="/user/savePassword" />
 	<form:form action="${savePassword}" method="post" modelAttribute="userAuthenticationModel" id="userCreateForm">
 		<table align="center">
 			<tr>
