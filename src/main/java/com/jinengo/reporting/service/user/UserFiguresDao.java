@@ -3,17 +3,13 @@ package com.jinengo.reporting.service.user;
 import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.jinengo.reporting.model.user.AggrPlatformFigures;
 import com.jinengo.reporting.model.user.AggrUserFigures;
 
 
@@ -45,8 +41,9 @@ public class UserFiguresDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
 		query.setParameter("year", year);
-		
-		return query.list();
+		List<AggrUserFigures> res = query.list(); 
+		session.close();
+		return res;
 	}
 	
 	/**

@@ -52,7 +52,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
 	public String handleTimeout() {
-		return "timeout";
+		return "helper/timeout";
 	}	
 	
 	/**

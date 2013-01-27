@@ -28,6 +28,9 @@
 				<beans:prop key="com.jinengo.reporting.service.helper.SpringException">
 				   helper/exceptionPage
 				</beans:prop>
+				<beans:prop key="org.springframework.web.servlet.PageNotFound">
+					pageNotFound
+				</beans:prop>
 			</beans:props>
 		</beans:property>
 		<beans:property name="defaultErrorView" value="helper/error"/>
