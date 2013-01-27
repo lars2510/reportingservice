@@ -26,11 +26,11 @@
 		<beans:property name="exceptionMappings">
 			<beans:props>
 				<beans:prop key="com.jinengo.reporting.service.helper.SpringException">
-				   ExceptionPage
+				   helper/exceptionPage
 				</beans:prop>
 			</beans:props>
 		</beans:property>
-		<beans:property name="defaultErrorView" value="error"/>
+		<beans:property name="defaultErrorView" value="helper/error"/>
 	</beans:bean>
 	
 	<context:component-scan base-package="com.jinengo.reporting" />

@@ -42,7 +42,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/loggedout", method = RequestMethod.GET)
 	public String handleForm() {
-		return "loggedout";
+		return "helper/loggedout";
 	}
 	
 	/**

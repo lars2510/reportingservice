@@ -14,11 +14,9 @@
 
     <http use-expressions="true">
         <intercept-url pattern="/**" access="hasAnyRole('supervisor','user')"/>
-        
         <logout logout-success-url="/loggedout" delete-cookies="JSESSIONID"/>
         <form-login />
         <remember-me />
-        
     </http>
  	
  	

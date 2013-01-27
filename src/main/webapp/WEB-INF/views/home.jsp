@@ -4,16 +4,16 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
-	<link rel="stylesheet" href="<c:url value='/static/css/style.css'/>" type="text/css" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Report</title>
+	<meta name="description" content="Report deiner wichtigsten Kennzahlen">
+    <meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="<c:url value='/resources/css/normalize.css'/>" type="text/css" />
+	<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" type="text/css" />
 </head>
 <body>
 <h1>
-<c:forEach var="person" items="${p}">
-     ${person.firstName}
-     ${person.gender}
-     <br />
-</c:forEach>
 	 
 </h1>
 

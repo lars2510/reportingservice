@@ -35,8 +35,8 @@ public class UserApiController {
 	private UserDao userAuthenticationDao;
 	
 
-	@RequestMapping(value = "/figure", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> getFigure(
+	@RequestMapping(value = "/figures", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigures> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			Principal principal) {			
@@ -54,8 +54,8 @@ public class UserApiController {
 		return keyFigures;
 	}
 
-	@RequestMapping(value = "/average", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> getAverage(
+	@RequestMapping(value = "/averages", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigures> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			Principal principal) {			

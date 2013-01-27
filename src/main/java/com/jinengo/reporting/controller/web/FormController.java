@@ -33,7 +33,7 @@ public class FormController {
 	public String addUser(Model model) {
 
 		model.addAttribute("userModel", model.addAttribute(new UserAuthenticationModel()));
-		return "forms/createUserForm";
+		return "authentication/createUser";
 	}
 
 
@@ -45,7 +45,7 @@ public class FormController {
 			for (int i = 0; i < err.size(); i++) {
 				System.out.println(err.get(i).getDefaultMessage());
 			}
-			return "forms/createUserForm";
+			return "authentication/createUser";
 		} else {
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 			String passwordEncoded = encoder.encode(userModel.getUserPassword());
@@ -53,7 +53,7 @@ public class FormController {
 			userModel.setUserRole("user");
 			userAuthenticationDao.saveAuthModel(userModel);
 
-			return "success";
+			return "authentication/successfulCreated";
 		}
 
 	}

@@ -29,7 +29,7 @@ public class PlatformApiController {
 	@Autowired
 	private PlatformFiguresDao platformFiguresDao;
 	
-	@RequestMapping(value = "/figure", method = RequestMethod.GET)
+	@RequestMapping(value = "/figures", method = RequestMethod.GET)
 	public @ResponseBody List<AggrPlatformFigures> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year) {			
@@ -39,8 +39,8 @@ public class PlatformApiController {
 		return keyFigures;
 	}
 
-	@RequestMapping(value = "/average", method = RequestMethod.GET)
-	public @ResponseBody List<AggrPlatformFigures> getAverage(
+	@RequestMapping(value = "/averages", method = RequestMethod.GET)
+	public @ResponseBody List<AggrPlatformFigures> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year) {			
 

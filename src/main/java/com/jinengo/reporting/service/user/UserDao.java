@@ -98,8 +98,7 @@ public class UserDao {
 	    finally {
 	    	if(s != null){
 	    		s.close();
-	    	}
-	        
+	    	}        
 	    }
 		
 		return true;
