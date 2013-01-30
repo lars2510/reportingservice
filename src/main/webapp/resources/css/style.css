@@ -14,7 +14,7 @@ body {
 	display: none;
 }
 
-.chart-button {
+.figure-button {
 	cursor: pointer;
 	background-color: #8c9cbf;
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8c9cbf), color-stop(50%, #546a9e), color-stop(50%, #36518f), color-stop(100%, #3d5691));
@@ -39,7 +39,7 @@ body {
 	display: inline-block;
 	
 }
-.chart-button:hover {
+.figure-button:hover {
 	background-color: #7f8dad;
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7f8dad), color-stop(50%, #4a5e8c), color-stop(50%, #2f477d), color-stop(100%, #364c80));
 	background-image: -webkit-linear-gradient(top, #7f8dad 0%, #4a5e8c 50%, #2f477d 50%, #364c80 100%);
@@ -49,7 +49,7 @@ body {
 	background-image: linear-gradient(top, #7f8dad 0%, #4a5e8c 50%, #2f477d 50%, #364c80 100%);
 	cursor: pointer; 
 }
-.chart-button:active {
+.figure-button:active {
 	-webkit-box-shadow: inset 0 0 20px 0 #1d2845, 0 1px 0 white;
 	box-shadow: inset 0 0 20px 0 #1d2845, 0 1px 0 white; 
 }

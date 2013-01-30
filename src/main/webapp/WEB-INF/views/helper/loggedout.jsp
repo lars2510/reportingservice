@@ -10,9 +10,9 @@
   </head>
 <body>
 <div id="content">
-<h2>Logged Out</h2>
+<h2>Abgemeldet</h2>
 <p>
-You have been logged out. <a href="<c:url value='/'/>">Start again</a>.
+Sie wurden abgemeldet. <a href="<c:url value='/'/>">Erneut anmelden</a>.
 </p>
 </div>
 </body>

@@ -29,7 +29,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView hello() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("p", null);
+		modelAndView.addObject("p", "Willkommen");
 		modelAndView.setViewName("home");
 		
 		return modelAndView;
@@ -53,15 +53,5 @@ public class HomeController {
 	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
 	public String handleTimeout() {
 		return "helper/timeout";
-	}	
-	
-	/**
-	 * Example Chart to show aggr user data from api
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/show-aggr-user", method = RequestMethod.GET)
-	public String showAggrUser() {
-		return "aggrUser";
 	}
 }

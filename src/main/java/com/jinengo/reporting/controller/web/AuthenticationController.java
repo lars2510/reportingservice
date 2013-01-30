@@ -17,7 +17,7 @@ import com.jinengo.reporting.model.user.UserAuthenticationModel;
 import com.jinengo.reporting.service.user.UserDao;
 
 @Controller
-public class FormController {
+public class AuthenticationController {
 
 	@Autowired
 	private UserDao userAuthenticationDao;
