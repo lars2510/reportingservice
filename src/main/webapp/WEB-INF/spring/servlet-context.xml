@@ -34,6 +34,7 @@
 			</beans:props>
 		</beans:property>
 		<beans:property name="defaultErrorView" value="helper/error"/>
+		<beans:property name="defaultStatusCode" value="500"/>
 	</beans:bean>
 	
 	<context:component-scan base-package="com.jinengo.reporting" />

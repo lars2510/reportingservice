@@ -32,6 +32,7 @@ public class UserFiguresDao {
 	
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
+		
 		String hql = "select sum(" + keyColumn + "), year, month " +
 						"from AggrUserFigures " +
 						"where jinengoUserID = :userId " +
@@ -41,6 +42,7 @@ public class UserFiguresDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
 		query.setParameter("year", year);
+		
 		List<AggrUserFigures> res = query.list(); 
 		session.close();
 		return res;
@@ -85,10 +87,11 @@ public class UserFiguresDao {
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
-		String hql = "select " + keyColumn + ", year, month, transportationType " +
+		String hql = "select sum(" + keyColumn + "), year, transportationType " +
 						"from AggrUserFigures " +
 						"where year = :year " +
-						"and jinengoUserID = :userId";
+						"and jinengoUserID = :userId " +
+						"group by year, transportationType";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);

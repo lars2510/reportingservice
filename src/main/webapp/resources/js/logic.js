@@ -1,82 +1,37 @@
-JinengoChart = function(keyFigure, chartYear, chartText) {
-	
-	// start chart drawing chain
-	var drawChart = function () {
-		getUserData();
-	};
-	
-	// get user data for a given figure
-	var getUserData = function () {
-		$.getJSON('api/user/figures', {keyFigure: keyFigure, year: chartYear}, function(userData, status) {
-			getPlatformData(userData);
-		});
-	};
-	
-	// get data for overall platform user for a given figure
-	var getPlatformData = function (userData) {
-		$.getJSON('api/platform/figures', {keyFigure: keyFigure, year: chartYear}, function(platformData, status) {
-			prepareData(userData, platformData);
-		});
-	};	  
-	
-	// prepare data to draw chart and set graph description
-	var prepareData = function (userData, compareData) {
-		var dataCategories = [],
-			dataUser = [],
-			dataPlatform = [],
-			monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-		
-		for (key in userData) {
-			// convert month integer 1-12 to Jan-Dez
-			dataCategories.push(monthList[userData[key][2] - 1]);
-			
-			// save property value for user
-			dataUser.push(userData[key][0]);
-			
-			// save property value for platform sum
-			if (compareData[key]) {
-				dataPlatform.push(compareData[key][0]);
-			} else {
-				dataPlatform.push(0);
-			}
-		}
-		hideLoader();
-		var graphData = {
-				dataUser: dataUser,
-				dataPlatform: dataPlatform,
-				dataCategories: dataCategories,
-				chartYear: chartYear,
-				chartText: chartText
-		};
-		graphChart(graphData);
-	};
-	drawChart();
-};
+$(function () {
+	function drawChart(graphHandler) {
+		var jinengoChart = new JinengoChart($(this).data('type'), $(this).data('unit'), $(this).text(), '2012', graphHandler);
 
-function showLoader() {
-	$('#loader').show();
-	$('#container').hide();
-}
-
-function hideLoader() {
-	$('#loader').hide();
-	$('#container').show();
-}
-
-function initEvenListener() {
+		jinengoChart.draw();
+		$(".nav .categorie").removeClass("current");
+	}
 	
 	// init event listener
-	$(".figure-button").click(function() {
-		showLoader();
-		var jinengoChart = new JinengoChart($(this).data('type'), '2012', $(this).text());
-	});
-}
-
-// init chart on DOM-ready
-$(function () {
+	function initEvenListener() {
+	
+		$(".monthSum .btn").click(function() {
+			drawChart(new GraphHandler("api/user/figures", "api/platform/figures"));
+		});
+		
+		$(".monthAvg .btn").click(function() {
+			drawChart(new GraphHandler("api/user/averages", "api/platform/averages"));
+		});
+		
+		$(".transportation .btn").click(function() {
+			drawChart(new PieHandler("api/user/transportation", "api/platform/transportation"));
+		});
+		
+		$(".nav .categorie .headline").click(function() {
+			$(".nav .categorie").removeClass("current");
+			$(this).parent().addClass("current");
+		});
+		$('.nav .categorie').mouseleave(function() {
+			$(this).removeClass("current");
+		});
+	}
 	
 	initEvenListener();
 	
 	//default start chart
-	var jinengoChart = new JinengoChart('sumEcoImpact', '2012', 'Eco-Impact');
+	$(".monthSum .btn").first().trigger('click');
 });

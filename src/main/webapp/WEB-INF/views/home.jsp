@@ -14,15 +14,41 @@
 </head>
 <body>
 	<ul class="nav">
-		<li class="figure-button" data-type="sumEcoImpact">CO2-Emission</li>
-		<li class="figure-button" data-type="sumCosts">Kosten</li>
-		<li class="figure-button" data-type="sumDistance">Entfernung</li>
-		<li class="figure-button" data-type="sumTime">Reisezeit</li>
-		<li class="figure-button" data-type="sumTimeUsable">Nutzbare Zeit</li>
+		<li class="categorie" data-type="monthSum">
+			<div class="headline">Monatsverbrauch</div>
+			<div class="subnav monthSum">
+				<ul>
+					<li class="btn" data-type="sumEcoImpact" data-unit="Gramm">CO2-Emission</li>
+					<li class="btn" data-type="sumCosts" data-unit="€">Kosten</li>
+					<li class="btn" data-type="sumDistance" data-unit="Kilometer">Entfernung</li>
+					<li class="btn" data-type="sumTime" data-unit="Minuten">Reisezeit</li>
+					<li class="btn" data-type="sumTimeUsable" data-unit="Minuten">Nutzbare Zeit</li>
+				</ul>
+			</div>
+		</li>
+		<li class="categorie" data-type="monthAvg">
+			<div class="headline">Monatsschnitt</div>
+			<div class="subnav monthAvg">
+				<ul>
+					<li class="btn" data-type="sumEcoImpact" data-unit="Gramm">CO2-Emission</li>
+					<li class="btn" data-type="sumCosts" data-unit="€">Kosten</li>
+					<li class="btn" data-type="sumDistance" data-unit="Kilometer">Entfernung</li>
+				</ul>			
+			</div>
+		</li>
+		<li class="categorie" data-type="transportation">
+			<div class="headline">Verkehrsmittel</div>
+			<div class="subnav transportation">
+				<ul>
+					<li class="btn" data-type="sumEcoImpact" data-unit="Gramm">CO2-Emission</li>
+					<li class="btn" data-type="sumCosts" data-unit="€">Kosten</li>
+					<li class="btn" data-type="sumDistance" data-unit="Kilometer">Entfernung</li>
+					<li class="btn" data-type="sumTime" data-unit="Minuten">Reisezeit</li>
+				</ul>			
+			</div>
+		</li>
 	</ul>
-	<ul class="nav">
-		<li class="pie-button">Verkehrsmittel</li>
-	</ul>
+
 	<div id="loader"></div>
 	<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 	<p><c:url value="/j_spring_security_logout" var="logoutUrl" />
@@ -31,7 +57,10 @@
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/jquery.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/highcharts.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/exporting.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/charts/graph.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/graph.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/bar.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/pie.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/jinengoChart.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/logic.js'/>"></script>
 </body>
 </html>

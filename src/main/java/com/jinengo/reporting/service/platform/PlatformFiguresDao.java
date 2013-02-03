@@ -36,7 +36,6 @@ public class PlatformFiguresDao {
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
-		//TODO: correct table and group by
 		String hql = "select sum(" + keyColumn + ") / count(distinct JinengoUserID), year, month " +
 						"from AggrUserFigures " +
 						"where year = :year " +
@@ -84,9 +83,10 @@ public class PlatformFiguresDao {
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
-		String hql = "select " + keyColumn + ", year, month, transportationType " +
+		String hql = "select sum(" + keyColumn + "), year, transportationType " +
 						"from AggrPlatformFigures " +
-						"where year = :year ";
+						"where year = :year " +
+						"group by year, transportationType";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
