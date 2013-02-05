@@ -86,7 +86,8 @@ public class PlatformFiguresDao {
 		String hql = "select sum(" + keyColumn + "), year, transportationType " +
 						"from AggrPlatformFigures " +
 						"where year = :year " +
-						"group by year, transportationType";
+						"group by year, transportationType " +
+						"order by transportationType asc";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);

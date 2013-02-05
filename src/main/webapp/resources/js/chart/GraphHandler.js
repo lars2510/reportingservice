@@ -1,4 +1,20 @@
-var BarHandler = {
+/**
+ * GraphHandler Class to draw a graph chart depending on the given data
+ * Init with api urls
+ * 
+ * Author: Lars Schüttemeyer
+ */
+
+// GraphHandler Class Constructor
+function GraphHandler (userApiUrl, compareApiUrl) {
+	this.userApiUrl = userApiUrl;
+	this.compareApiUrl = compareApiUrl;
+}
+
+// Extend the graph class prototybe object
+GraphHandler.prototype = {
+		
+	// prepare data and start chart drawing
 	draw: function(graphData) {
 		this.drawChart(this.prepareData(graphData));
 	},
@@ -24,7 +40,7 @@ var BarHandler = {
 				prepPlatformData.push(0);
 			}
 		}
-		hideLoader();
+		
 		graphData.prepUserData = prepUserData;
 		graphData.prepPlatformData = prepPlatformData;
 		graphData.dataCategories = dataCategories;
@@ -32,6 +48,7 @@ var BarHandler = {
 		return graphData;
 	},
 
+	// use highchart lib to draw the chart with the given data
 	drawChart: function (graphData) {
 		
 		new Highcharts.Chart({
@@ -40,7 +57,7 @@ var BarHandler = {
 	            type: 'line'
 	        },
 	        title: {
-	            text: graphData.chartText + ' im Vergleich zum Durchschnitt'
+	            text: graphData.chartText
 	        },
 	        subtitle: {
 	            text: 'Monatsansicht für das Jahr ' + graphData.chartYear
@@ -50,7 +67,7 @@ var BarHandler = {
 	        },
 	        yAxis: {
 	            title: {
-	                text: graphData.chartText
+	                text: graphData.chartText + " (" + graphData.chartUnit + ")"
 	            },
 	            plotLines: [{
 	                value: 0,
@@ -60,7 +77,8 @@ var BarHandler = {
 	        },
 	        tooltip: {
 	            shared: true,
-	            crosshairs: true
+	            crosshairs: true,
+	            valueDecimals: 1
 	        },
 	        series: [{
 	            name: 'Jinengo User',

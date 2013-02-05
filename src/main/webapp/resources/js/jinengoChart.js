@@ -1,17 +1,26 @@
+/**
+ * JinengoChart Class to handle json request to the jinengo api
+ * Delegate the chart drawing mechanism to the chartHandler
+ * 
+ * Author: Lars Schüttemeyer
+ */
 var JinengoChart = function(keyFigure, chartUnit, chartText, chartYear, chartHandler) {
 	var _self = this;
 	
+	// basic chart data
 	_self.graphData = {
 		chartUnit: chartUnit,
 		chartText: chartText,
 		chartYear: chartYear
 	};
 	
+	// start the drawing chain
 	_self.draw = function () {
 		showLoader();
 		getData();
 	};
 	
+	// make ajax calls to jinengo api to get the data
 	var getData = function () {
 		$.when(
 			$.ajax({
@@ -37,11 +46,13 @@ var JinengoChart = function(keyFigure, chartUnit, chartText, chartYear, chartHan
 		});
 	};
 	
+	// show loader while waiting for data
 	var showLoader = function () {
 		$('#loader').show();
 		$('#container').hide();
 	};
 	
+	// hide loader
 	var hideLoader = function () {
 		$('#loader').hide();
 		$('#container').show();

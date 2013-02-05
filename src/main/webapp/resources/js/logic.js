@@ -1,14 +1,22 @@
+/**
+ * Default JavaScript to init event listener and start the chart drawing process
+ * Author: Lars Schüttemeyer
+ */
 $(function () {
 	
+	/**
+	 * Create instance of Chart Handler and start drawing the chart
+	 */
 	function drawChart(btn, graphHandler) {
-		console.log($(btn).data('type') + " - " + $(btn).data('unit') + " - " + $(btn).text())
+		
 		var jinengoChart = new JinengoChart($(btn).data('type'), $(btn).data('unit'), $(btn).text(), '2012', graphHandler);
-
 		jinengoChart.draw();
 		
 	}
 	
-	// init event listener
+	/**
+	 * init event handler for button with specific api url
+	 */
 	function initEventListener() {
 	
 		$(".btn.monthSum").click(function() {
@@ -25,6 +33,9 @@ $(function () {
 	
 	}
 
+	/**
+	 * init event handler to display navigation menue
+	 */
 	function initNavigationListener() {
 		
 		$(".nav .categorie .headline").click(function() {
@@ -38,10 +49,11 @@ $(function () {
 		
 	}
 	
+	// initialize
 	initEventListener();
 	initNavigationListener();
 	
-	//default start chart
+	//init default chart
 	$(".btn.monthSum").first().trigger('click');
 	
 });

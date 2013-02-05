@@ -1,13 +1,24 @@
+/**
+ * PieHandler Class to draw a pie chart depending on the given data
+ * Init with api urls
+ * 
+ * Author: Lars Schüttemeyer
+ */
+
+// PieHandler Class default constructor
 function PieHandler (userApiUrl, compareApiUrl) {
 	this.userApiUrl = userApiUrl;
 	this.compareApiUrl = compareApiUrl;
 }
 
+//Extend the pie class prototybe object
 PieHandler.prototype = {
 
+	// prepare data and start chart drawing, change html class properties to draw two pies
 	draw: function(graphData) {
 		var preparedData = this.prepareData(graphData);
 		$("#compare-container").show();
+		$(".container").addClass("type1of2");
 		this.drawChart(preparedData, preparedData.prepUserData, 'container');
 		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container');
 	},
@@ -28,7 +39,9 @@ PieHandler.prototype = {
 		return graphData;
 	},
 
+	// use highchart lib to draw the chart with the given data
 	drawChart: function (graphData, graphValues, container) {
+		
 	    new Highcharts.Chart({
 	        chart: {
 	            renderTo: container,
@@ -37,7 +50,7 @@ PieHandler.prototype = {
 	            plotShadow: false
 	        },
 	        title: {
-	            text: graphData.chartText
+	            text: graphData.chartText + " (" + graphData.chartUnit + ")"
 	        },
 	        tooltip: {
 	            pointFormat: '{series.name}: <b>{point.percentage}%</b>',

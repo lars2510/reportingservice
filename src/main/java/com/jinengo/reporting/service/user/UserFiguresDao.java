@@ -91,7 +91,8 @@ public class UserFiguresDao {
 						"from AggrUserFigures " +
 						"where year = :year " +
 						"and jinengoUserID = :userId " +
-						"group by year, transportationType";
+						"group by year, transportationType " +
+						"order by transportationType asc";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
