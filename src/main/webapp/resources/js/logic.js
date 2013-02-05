@@ -1,37 +1,47 @@
 $(function () {
-	function drawChart(graphHandler) {
-		var jinengoChart = new JinengoChart($(this).data('type'), $(this).data('unit'), $(this).text(), '2012', graphHandler);
+	
+	function drawChart(btn, graphHandler) {
+		console.log($(btn).data('type') + " - " + $(btn).data('unit') + " - " + $(btn).text())
+		var jinengoChart = new JinengoChart($(btn).data('type'), $(btn).data('unit'), $(btn).text(), '2012', graphHandler);
 
 		jinengoChart.draw();
-		$(".nav .categorie").removeClass("current");
+		
 	}
 	
 	// init event listener
-	function initEvenListener() {
+	function initEventListener() {
 	
-		$(".monthSum .btn").click(function() {
-			drawChart(new GraphHandler("api/user/figures", "api/platform/figures"));
+		$(".btn.monthSum").click(function() {
+			drawChart(this, new GraphHandler("api/user/figures", "api/platform/figures"));
 		});
 		
-		$(".monthAvg .btn").click(function() {
-			drawChart(new GraphHandler("api/user/averages", "api/platform/averages"));
+		$(".btn.monthAvg").click(function() {
+			drawChart(this, new GraphHandler("api/user/averages", "api/platform/averages"));
 		});
 		
-		$(".transportation .btn").click(function() {
-			drawChart(new PieHandler("api/user/transportation", "api/platform/transportation"));
+		$(".btn.transportation").click(function() {
+			drawChart(this, new PieHandler("api/user/transportation", "api/platform/transportation"));
 		});
+	
+	}
+
+	function initNavigationListener() {
 		
 		$(".nav .categorie .headline").click(function() {
 			$(".nav .categorie").removeClass("current");
 			$(this).parent().addClass("current");
 		});
+		
 		$('.nav .categorie').mouseleave(function() {
 			$(this).removeClass("current");
 		});
+		
 	}
 	
-	initEvenListener();
+	initEventListener();
+	initNavigationListener();
 	
 	//default start chart
-	$(".monthSum .btn").first().trigger('click');
+	$(".btn.monthSum").first().trigger('click');
+	
 });
