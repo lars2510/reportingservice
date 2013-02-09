@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jinengo.reporting.model.user.AggrPlatformFigures;
-import com.jinengo.reporting.model.user.AggrUserFigures;
+import com.jinengo.reporting.model.user.AggrUserFigurePerTransportation;
+import com.jinengo.reporting.model.user.AggrUserFigure;
 import com.jinengo.reporting.service.helper.SpringException;
 import com.jinengo.reporting.service.platform.PlatformFiguresDao;
 
@@ -30,32 +30,32 @@ public class PlatformApiController {
 	private PlatformFiguresDao platformFiguresDao;
 	
 	@RequestMapping(value = "/figures", method = RequestMethod.GET)
-	public @ResponseBody List<AggrPlatformFigures> getFigures(
+	public @ResponseBody List<AggrUserFigure> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year) {			
 
-		List<AggrPlatformFigures> keyFigures = platformFiguresDao.getKeyFigureSum(keyFigure, Integer.parseInt(year));
+		List<AggrUserFigure> keyFigures = platformFiguresDao.getKeyFigureSum(keyFigure, Integer.parseInt(year));
 
 		return keyFigures;
 	}
 
 	@RequestMapping(value = "/averages", method = RequestMethod.GET)
-	public @ResponseBody List<AggrPlatformFigures> getAverages(
+	public @ResponseBody List<AggrUserFigure> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year) {			
 
-		List<AggrPlatformFigures> keyFigures = platformFiguresDao.getKeyFigureAvg(keyFigure, Integer.parseInt(year));
+		List<AggrUserFigure> keyFigures = platformFiguresDao.getKeyFigureAvg(keyFigure, Integer.parseInt(year));
 
 		return keyFigures;
 	}
 	
 	@RequestMapping(value = "/transportation", method = RequestMethod.GET)
-	public @ResponseBody List<AggrPlatformFigures> getTransportation(
+	public @ResponseBody List<AggrUserFigurePerTransportation> getTransportation(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year,
 			@RequestParam(value="month", required = false, defaultValue = "0") String month) {			
 
-		List<AggrPlatformFigures> keyFigures = platformFiguresDao.getTransportation(keyFigure, Integer.parseInt(year), Integer.parseInt(month));
+		List<AggrUserFigurePerTransportation> keyFigures = platformFiguresDao.getTransportation(keyFigure, Integer.parseInt(year), Integer.parseInt(month));
 
 		return keyFigures;
 	}

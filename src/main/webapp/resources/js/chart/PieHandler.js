@@ -19,41 +19,61 @@ PieHandler.prototype = {
 		var preparedData = this.prepareData(graphData);
 		$("#compare-container").show();
 		$(".container").addClass("type1of2");
-		this.drawChart(preparedData, preparedData.prepUserData, 'container');
-		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container');
+		this.drawChart(preparedData, preparedData.prepUserData, 'container', 'Nutzer');
+		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container', 'Plattformdurchschnitt');
+	},
+	
+	color: {
+		"Car Sharing": "rgba(200,100,30,.8)",
+		"Fernverkehr": "rgba(20,80,120,.8)",
+		"Human Powered": "rgba(20,200,60,.8)",
+		"ÖPNV": "rgba(90,60,200,.8)",
+		"PKW (Privat)": "rgba(200,20,30,.8)"
 	},
 	
 	// prepare data to draw chart and set graph description
 	prepareData: function (graphData) {
+		
+		var color;
 		graphData.prepUserData = [];
 		graphData.prepCompareData = [];
 		
 		for (var i = 0; i < graphData.userData.length; i++) {
-			graphData.prepUserData.push([graphData.userData[i][2], graphData.userData[i][0]]);	
+			color = this.color[graphData.userData[i][2]];
+			graphData.prepUserData.push({
+                name: graphData.userData[i][2],
+                y: graphData.userData[i][0],
+                color: color
+			});
 		}
 		
 		for (var i = 0; i < graphData.compareData.length; i++) {
-			graphData.prepCompareData.push([graphData.compareData[i][2], graphData.compareData[i][0]]);
+			color = this.color[graphData.compareData[i][2]];
+			graphData.prepCompareData.push({
+                name: graphData.compareData[i][2],
+                y: graphData.compareData[i][0],
+                color: color
+			});
 		}
 		
 		return graphData;
 	},
 
 	// use highchart lib to draw the chart with the given data
-	drawChart: function (graphData, graphValues, container) {
+	drawChart: function (graphData, graphValues, container, kind) {
 		
 	    new Highcharts.Chart({
 	        chart: {
 	            renderTo: container,
-	            plotBackgroundColor: null,
+	            plotBackgroundColor: false,
 	            plotBorderWidth: null,
-	            plotShadow: false
+	            plotShadow: true
 	        },
 	        title: {
-	            text: graphData.chartText + " (" + graphData.chartUnit + ")"
+	            text: graphData.chartText + " <b>" + kind + "</b><br /> (" + graphData.chartUnit + ")"
 	        },
 	        tooltip: {
-	            pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+	            pointFormat: '{point.percentage}%',
 	            percentageDecimals: 1
 	        },
 	        plotOptions: {
@@ -61,12 +81,7 @@ PieHandler.prototype = {
 	                allowPointSelect: true,
 	                cursor: 'pointer',
 	                dataLabels: {
-	                    enabled: true,
-	                    color: '#333',
-	                    connectorColor: '#333',
-	                    formatter: function() {
-	                        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
-	                    }
+	                    enabled: false
 	                },
 	                showInLegend: true
 	            }

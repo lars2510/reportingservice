@@ -1,6 +1,7 @@
 package com.jinengo.reporting.controller.api.user;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jinengo.reporting.model.user.AggrUserFigures;
+import com.jinengo.reporting.model.user.AggrUserFigure;
+import com.jinengo.reporting.model.user.AggrUserFigurePerTransportation;
 import com.jinengo.reporting.model.user.JinengoUser;
 import com.jinengo.reporting.service.helper.SpringException;
 import com.jinengo.reporting.service.user.UserDao;
@@ -32,18 +34,18 @@ public class UserApiController {
 	private UserFiguresDao userFiguresDao;
 
 	@Autowired
-	private UserDao userAuthenticationDao;
+	private UserDao userDao;
 	
 
 	@RequestMapping(value = "/figures", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> getFigures(
+	public @ResponseBody List<AggrUserFigure> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			Principal principal) {			
 
-		List<AggrUserFigures> keyFigures = null;
+		List<AggrUserFigure> keyFigures = null;
 		
-		int userId = userAuthenticationDao.getUserId(principal.getName());
+		int userId = userDao.getUserId(principal.getName());
 		
 		if (userId != -1) {
 			keyFigures = userFiguresDao.getKeyFigureSum(userId, keyFigure, Integer.parseInt(year));
@@ -55,14 +57,14 @@ public class UserApiController {
 	}
 
 	@RequestMapping(value = "/averages", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> getAverages(
+	public @ResponseBody List<AggrUserFigure> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			Principal principal) {			
 
-		List<AggrUserFigures> keyFigures = null;
+		List<AggrUserFigure> keyFigures = null;
 		
-		int userId = userAuthenticationDao.getUserId(principal.getName());
+		int userId = userDao.getUserId(principal.getName());
 		
 		if (userId != -1) {
 			keyFigures = userFiguresDao.getKeyFigureAvg(userId, keyFigure, Integer.parseInt(year));
@@ -74,15 +76,15 @@ public class UserApiController {
 	}
 	
 	@RequestMapping(value = "/transportation", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigures> getTransportation(
+	public @ResponseBody List<AggrUserFigurePerTransportation> getTransportation(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			@RequestParam(value="month", required = false, defaultValue = "0") String month,
 			Principal principal) {			
 
-		List<AggrUserFigures> keyFigures = null;
+		List<AggrUserFigurePerTransportation> keyFigures = null;
 		
-		int userId = userAuthenticationDao.getUserId(principal.getName());
+		int userId = userDao.getUserId(principal.getName());
 		
 		if (userId != -1) {
 			keyFigures = userFiguresDao.getTransportation(userId, keyFigure, Integer.parseInt(year), Integer.parseInt(month));
@@ -95,7 +97,7 @@ public class UserApiController {
 	
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public @ResponseBody JinengoUser getDetails(Principal principal) {
-		JinengoUser userDetails = userAuthenticationDao.getUserDetails(principal.getName());
+		JinengoUser userDetails = userDao.getUserDetails(principal.getName());
 		
 		if (userDetails == null) {
 			throw new SpringException("Für den aktuell eingeloggten Nutzer liegen keine Details vor!");
@@ -104,4 +106,10 @@ public class UserApiController {
 		return userDetails;
 	}
 	
+	@RequestMapping(value = "/friends", method = RequestMethod.GET)
+	public @ResponseBody ArrayList<JinengoUser> getFriends(Principal principal) {
+		ArrayList<JinengoUser> userFriends = userDao.getUserFriends(principal.getName());
+		
+		return userFriends;
+	}
 }

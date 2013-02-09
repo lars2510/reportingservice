@@ -14,13 +14,24 @@
 </head>
 <body>
 	<div class="wrapper">
+		<div class="head">
+			<div class="left">
+				<h2></h2>
+				<span></span>
+			</div>
+			<div class="friend-list-hd right">
+				<div class="headline">Vergleiche dich mit deinen Freunden</div>
+				<ul id="friend-list">
+				</ul>
+			</div>
+		</div>
 		<ul class="nav">
 			<li class="categorie" data-type="monthSum">
 				<div class="headline">CO2-Emission</div>
 				<div class="subnav">
 					<ul>
-						<li class="btn monthSum" data-type="sumEcoImpact" data-unit="Gramm">Monatliche Emission</li>
-						<li class="btn monthAvg" data-type="sumEcoImpact" data-unit="Gramm">Durchschnitlliche Emission pro KM</li>
+						<li class="btn monthSum" data-type="sumEcoImpact" data-unit="Gramm">Monatliche CO2-Emission</li>
+						<li class="btn monthAvg" data-type="sumEcoImpact" data-unit="Gramm">Durchschnitlliche CO2-Emission pro KM</li>
 						<li class="btn transportation" data-type="sumEcoImpact" data-unit="CO2-Emission in Gramm">Anteil der Verkehrsmittel</li>
 					</ul>
 				</div>
@@ -55,10 +66,9 @@
 				</div>
 			</li>
 		</ul>
-	
 		<div id="loader"></div>
 		<div id="container" class="container"></div>
-		<div id="compare-container" class="container"></div>
+		<div id="compare-container" class="container" style="display:none;"></div>
 		<div class="logout">
 			<c:url value="/j_spring_security_logout" var="logoutUrl" />
 			<a href="${logoutUrl}">Abmelden</a>
@@ -66,11 +76,9 @@
 	</div>
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/jquery.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/highcharts.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/lib/exporting.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/chart/graph.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/chart/bar.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/chart/pie.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/resources/js/jinengoChart.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/GraphHandler.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/PieHandler.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/JinengoChart.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/logic.js'/>"></script>
 </body>
 </html>

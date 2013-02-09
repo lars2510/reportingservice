@@ -1,6 +1,10 @@
 package com.jinengo.reporting.service.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -68,12 +72,65 @@ public class UserDao {
 
 		// select user by mail
 		crit.add( Restrictions.eq("email", userEmail) );
-		
 		if(crit.list().size() == 1) { 
 			user = (JinengoUser) crit.list().get(0);
 		}
+		s.close();
 		
 		return user;
+	}
+	
+	/**
+	 * Get user details from jinengo database by id
+	 * 
+	 * @param userId
+	 * @return JinengoUser - jinengo user details, null if no user was found
+	 */
+	public JinengoUser getUserDetails(int id) {
+		JinengoUser user = null;
+		
+		// open session
+		Session s = getSessionFactory().openSession();
+		
+		// create criteria
+		Criteria crit = s.createCriteria(JinengoUser.class);
+
+		// select user by mail
+		crit.add( Restrictions.eq("id", id) );
+		if(crit.list().size() == 1) { 
+			user = (JinengoUser) crit.list().get(0);
+		}
+		s.close();
+		
+		return user;
+	}
+	
+	/**
+	 * Get user friends from jinengo database by email
+	 * 
+	 * @param userEmail
+	 * @return JinengoUser - jinengo user friends, null if no user was found
+	 */
+	public ArrayList<JinengoUser> getUserFriends(String userEmail) {
+		ArrayList<JinengoUser> friendList = new ArrayList<JinengoUser>();
+		
+		Session session = getSessionFactory().openSession();
+		
+		String hql = "select jinengoUserID_friend " +
+						"from JinengoUserFriend " +
+						"where jinengoUserID_user = :jinengoUserID ";
+		
+		Query query = session.createQuery(hql);
+		query.setParameter("jinengoUserID", getUserId(userEmail));
+		
+		List<Integer> res = query.list();
+		
+		for (int i = 0; i < res.size(); i++) {
+			friendList.add(getUserDetails(res.get(i)));
+		}
+		
+		session.close();
+		return friendList;
 	}
 	
 	@Transactional

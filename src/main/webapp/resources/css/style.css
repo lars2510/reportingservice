@@ -18,18 +18,44 @@ a:visited {
 	-webkit-box-shadow: 0px 0px 5px 0px #AAA;
 	box-shadow: 0px 0px 5px 0px #AAA;
 	position: relative;
-	padding: 15px;
+	padding: 15px 15px 110px 15px;
 	min-height: 520px;
+	overflow: hidden;
 }
 
 ul {
     margin: 0 0 0 0;
 }
 
+h2 {
+	margin: 8px 0 4px 0;
+}
+
+.head {
+	height: 42px;
+	margin: 0 0 0 20px;
+}
+.head .left {
+	width: 60%;
+	float: left;
+}
+.head .right {
+	width: 40%;
+	float: right;
+}
+#friend-list {
+	height: 0;
+	overflow: hidden;
+	z-index: 4;
+	position: relative;
+}
+#friend-list.current {
+	height: 120px;
+}
 .nav {
 	overflow: hidden;
 	position: absolute;
-	top: 30px;
+	top: 95px;
 	left: 35px;
 	z-index: 2;
 }
@@ -141,6 +167,7 @@ ul {
 	float: left;
 	border: 1px solid #ccc;
 	margin-right: 5px;
+	padding: 1px;
 }
 .type1of2:first-child {
 	border-right: 2px solid #ccc;

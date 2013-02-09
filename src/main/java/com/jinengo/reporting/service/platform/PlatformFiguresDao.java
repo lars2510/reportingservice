@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.jinengo.reporting.model.user.AggrPlatformFigures;
-import com.jinengo.reporting.model.user.AggrUserFigures;
+import com.jinengo.reporting.model.user.AggrUserFigurePerTransportation;
+import com.jinengo.reporting.model.user.AggrUserFigure;
 
 
 @Repository
@@ -31,20 +31,22 @@ public class PlatformFiguresDao {
 	 * @param year
 	 * @return list - list of avg platform figures
 	 */
-	public List<AggrPlatformFigures> getKeyFigureSum(String keyFigure, int year) {
+	public List<AggrUserFigure> getKeyFigureSum(String keyFigure, int year) {
 		
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
 		String hql = "select sum(" + keyColumn + ") / count(distinct JinengoUserID), year, month " +
-						"from AggrUserFigures " +
+						"from AggrUserFigure " +
 						"where year = :year " +
 						"group by year, month";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
 		
-		return query.list();
+		List<AggrUserFigure> res = query.list(); 
+		session.close();
+		return res;
 	}
 	
 	/**
@@ -54,20 +56,22 @@ public class PlatformFiguresDao {
 	 * @param year
 	 * @return list - list of avg platform figures
 	 */
-	public List<AggrPlatformFigures> getKeyFigureAvg(String keyFigure, int year) {
+	public List<AggrUserFigure> getKeyFigureAvg(String keyFigure, int year) {
 		
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
 		String hql = "select sum(" + keyColumn + ") / sum(sumDistance), year, month " +
-						"from AggrPlatformFigures " +
+						"from AggrUserFigure " +
 						"where year = :year " +
 						"group by year, month";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
 		
-		return query.list();
+		List<AggrUserFigure> res = query.list(); 
+		session.close();
+		return res;
 	}
 	
 	/**
@@ -78,21 +82,23 @@ public class PlatformFiguresDao {
 	 * @param month
 	 * @return list - list of key figures
 	 */
-	public List<AggrPlatformFigures> getTransportation(String keyFigure, int year, int month) {
+	public List<AggrUserFigurePerTransportation> getTransportation(String keyFigure, int year, int month) {
 
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
 		
-		String hql = "select sum(" + keyColumn + "), year, transportationType " +
-						"from AggrPlatformFigures " +
+		String hql = "select sum(" + keyColumn + ") / count(distinct JinengoUserID), year, transportation " +
+						"from AggrUserFigurePerTransportation " +
 						"where year = :year " +
-						"group by year, transportationType " +
-						"order by transportationType asc";
+						"group by year, transportation " +
+						"order by transportation asc";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("year", year);
 		
-		return query.list();
+		List<AggrUserFigurePerTransportation> res = query.list(); 
+		session.close();
+		return res;
 	}	
 	
 	public SessionFactory getSessionFactoryDw() {
