@@ -67,8 +67,10 @@
 			</li>
 		</ul>
 		<div id="loader"></div>
-		<div id="container" class="container"></div>
-		<div id="compare-container" class="container" style="display:none;"></div>
+		<div class="container-wrapper">
+			<div id="container" class="container"></div>
+			<div id="compare-container" class="container" style="display:none;"></div>
+		</div>
 		<div class="logout">
 			<c:url value="/j_spring_security_logout" var="logoutUrl" />
 			<a href="${logoutUrl}">Abmelden</a>

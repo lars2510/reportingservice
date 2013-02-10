@@ -4,12 +4,16 @@
  */
 $(function () {
 	
+	var GraphData = {};
+	
 	/**
 	 * Create instance of Chart Handler and start drawing the chart
 	 */
-	function drawChart(btn, graphHandler) {
+	function drawChart(graphData) {
+		hideCompContainer();
 		$('.nav .categorie').removeClass("current");
-		var jinengoChart = new JinengoChart($(btn).data('type'), $(btn).data('unit'), $(btn).text(), '2012', graphHandler);
+		
+		var jinengoChart = new JinengoChart(graphData);
 		jinengoChart.draw();
 		
 	}
@@ -22,23 +26,34 @@ $(function () {
 		$(".container").removeClass("type1of2");
 	}
 	
+	function setGraphData(btn, year, graphHandler, name) {
+		GraphData.type = $(btn).data('type');
+		GraphData.unit = $(btn).data('unit'); 
+		GraphData.text = $(btn).text();
+		GraphData.year = year;
+		GraphData.handler = graphHandler;
+		GraphData.name = name;
+		return GraphData;
+	}
+	
 	/**
 	 * init event handler for button with specific api url
 	 */
 	function initEventListener() {
 	
 		$(".btn.monthSum").click(function() {
-			hideCompContainer();
-			drawChart(this, new GraphHandler("api/user/figures", "api/platform/figures"));
+			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/figures", "api/platform/figures"), "figures");
+			drawChart(graphData);
 		});
 		
 		$(".btn.monthAvg").click(function() {
-			hideCompContainer();	
-			drawChart(this, new GraphHandler("api/user/averages", "api/platform/averages"));
+			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/averages", "api/platform/averages"), "averages");
+			drawChart(graphData);
 		});
 		
 		$(".btn.transportation").click(function() {
-			drawChart(this, new PieHandler("api/user/transportation", "api/platform/transportation"));
+			var graphData = setGraphData(this, '2012', new PieHandler("api/user/transportation", "api/platform/transportation"), "transportation");
+			drawChart(graphData);
 		});
 	
 	}
@@ -48,11 +63,13 @@ $(function () {
 	 */
 	function initNavigationListener() {
 		
+		// For Touch Device
 		$(".nav .categorie .headline").click(function() {
 			$(".nav .categorie").removeClass("current");
 			$(this).parent().addClass("current");
 		});
-		
+
+		// For Mouse Device
 		$('.nav .categorie').mouseleave(function() {
 			$(this).removeClass("current");
 		});
@@ -61,6 +78,7 @@ $(function () {
 			$(this).addClass("current");
 		});
 		
+		// Friends Menue
 		$('.friend-list-hd').mouseleave(function() {
 			$('#friend-list').removeClass("current");
 		});
@@ -81,7 +99,7 @@ $(function () {
 	}
 	
 	/**
-	 * ajax request to get user data like user name
+	 * ajax request to get users friends
 	 */
 	function initFriendList() {
 		$.getJSON('api/user/friends', function(friendList, status) {
@@ -90,7 +108,10 @@ $(function () {
 				$friendList.append($("<li />").data("id", friendList[i].id).html(friendList[i].name));
 			}
 			$friendList.children().click(function() {
-				console.log($(this).data("id"));
+				var friendId = $(this).data("id");
+				console.log("api/user/" + GraphData.name);
+				GraphData.handler.compareApiUrl = "api/user/" + GraphData.name; 
+				drawChart(GraphData);
 			});
 		});
 	}
