@@ -174,9 +174,6 @@ h2 {
 	margin-right: 5px;
 	padding: 1px;
 }
-.type1of2:first-child {
-	border-right: 2px solid #ccc;
-}
 .logout {
 	position: absolute;
 	top: 24px;

@@ -77,6 +77,35 @@ public class UserFiguresDao {
 	}
 	
 	/**
+	 * Monthly Advantages and Disadvantages to the best/worst possible route
+	 * 
+	 * @param userId
+	 * @param keyFigure
+	 * @param year
+	 * @return list - list of user figures
+	 */
+	public List<AggrUserFigure> getAdvantages(int userId, String keyFigure, int year) {
+	
+		Session session = getSessionFactoryDw().openSession();
+		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
+		String keyColumnBest = keyColumn + "BestOption";
+		String keyColumnWorst = keyColumn + "WorstOption";
+		String hql = "select " + keyColumn + ", " + keyColumnBest + " , " + keyColumnWorst + ", year, month " +
+						"from AggrUserFigure " +
+						"where jinengoUserID = :userId " +
+						"and year = :year";
+		
+		Query query = session.createQuery(hql);
+		query.setParameter("userId", userId);
+		query.setParameter("year", year);
+		
+		List<AggrUserFigure> res = query.list(); 
+		session.close();
+		return res;
+		
+	}
+	
+	/**
 	 * Get key figures for each transportation type
 	 * 
 	 * @param userId

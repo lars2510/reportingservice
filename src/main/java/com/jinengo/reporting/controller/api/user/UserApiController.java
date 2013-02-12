@@ -40,15 +40,16 @@ public class UserApiController {
 	@RequestMapping(value = "/figures", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigure> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
-			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
+			@RequestParam(value="year", required = false, defaultValue = "2012") String year,
+			@RequestParam(value="friendId", required = false, defaultValue = "") String friendId,
 			Principal principal) {			
 
 		List<AggrUserFigure> keyFigures = null;
 		
-		int userId = userDao.getUserId(principal.getName());
+		int queryId = friendId.length() > 0 ? Integer.parseInt(friendId) : userDao.getUserId(principal.getName());
 		
-		if (userId != -1) {
-			keyFigures = userFiguresDao.getKeyFigureSum(userId, keyFigure, Integer.parseInt(year));
+		if (queryId != -1) {
+			keyFigures = userFiguresDao.getKeyFigureSum(queryId, keyFigure, Integer.parseInt(year));
 		} else {
 			throw new SpringException("Der aktuell eingeloggte Nutzer besitzt keinen gültigen Jinengo Account!");
 		}
@@ -60,14 +61,35 @@ public class UserApiController {
 	public @ResponseBody List<AggrUserFigure> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
+			@RequestParam(value="friendId", required = false, defaultValue = "") String friendId,
 			Principal principal) {			
 
 		List<AggrUserFigure> keyFigures = null;
 		
-		int userId = userDao.getUserId(principal.getName());
+		int queryId = friendId.length() > 0 ? Integer.parseInt(friendId) : userDao.getUserId(principal.getName());
 		
-		if (userId != -1) {
-			keyFigures = userFiguresDao.getKeyFigureAvg(userId, keyFigure, Integer.parseInt(year));
+		if (queryId != -1) {
+			keyFigures = userFiguresDao.getKeyFigureAvg(queryId, keyFigure, Integer.parseInt(year));
+		} else {
+			throw new SpringException("Der aktuell eingeloggte Nutzer besitzt keinen gültigen Jinengo Account!");
+		}
+		
+		return keyFigures;
+	}
+	
+	@RequestMapping(value = "/advantages", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigure> getAdvantages(
+			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
+			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
+			@RequestParam(value="friendId", required = false, defaultValue = "") String friendId,
+			Principal principal) {			
+
+		List<AggrUserFigure> keyFigures = null;
+		
+		int queryId = friendId.length() > 0 ? Integer.parseInt(friendId) : userDao.getUserId(principal.getName());
+		
+		if (queryId != -1) {
+			keyFigures = userFiguresDao.getAdvantages(queryId, keyFigure, Integer.parseInt(year));
 		} else {
 			throw new SpringException("Der aktuell eingeloggte Nutzer besitzt keinen gültigen Jinengo Account!");
 		}
@@ -80,14 +102,15 @@ public class UserApiController {
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			@RequestParam(value="month", required = false, defaultValue = "0") String month,
+			@RequestParam(value="friendId", required = false, defaultValue = "") String friendId,
 			Principal principal) {			
 
 		List<AggrUserFigurePerTransportation> keyFigures = null;
 		
-		int userId = userDao.getUserId(principal.getName());
+		int queryId = friendId.length() > 0 ? Integer.parseInt(friendId) : userDao.getUserId(principal.getName());
 		
-		if (userId != -1) {
-			keyFigures = userFiguresDao.getTransportation(userId, keyFigure, Integer.parseInt(year), Integer.parseInt(month));
+		if (queryId != -1) {
+			keyFigures = userFiguresDao.getTransportation(queryId, keyFigure, Integer.parseInt(year), Integer.parseInt(month));
 		} else {
 			throw new SpringException("Der aktuell eingeloggte Nutzer besitzt keinen gültigen Jinengo Account!");
 		}

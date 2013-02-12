@@ -16,13 +16,20 @@ PieHandler.prototype = {
 
 	// prepare data and start chart drawing, change html class properties to draw two pies
 	draw: function(graphData) {
+		
+		// prepare data and html container to show pie chart
 		var preparedData = this.prepareData(graphData);
 		$("#compare-container").show();
 		$(".container").addClass("type1of2");
+		
+		// draw left pie
 		this.drawChart(preparedData, preparedData.prepUserData, 'container', 'Nutzer');
+		
+		// draw right pie
 		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container', 'Plattformdurchschnitt');
 	},
 	
+	// optional individual color setting 
 	color: {
 		"Car Sharing": "rgba(200,100,30,.8)",
 		"Fernverkehr": "rgba(20,80,120,.8)",
@@ -70,7 +77,7 @@ PieHandler.prototype = {
 	            plotShadow: true
 	        },
 	        title: {
-	            text: graphData.chartText + " <b>" + kind + "</b><br /> (" + graphData.chartUnit + ")"
+	            text: graphData.chartText + " <b>" + kind + "</b><br /> (" + graphData.unit + ")"
 	        },
 	        tooltip: {
 	            pointFormat: '{point.percentage}%',
@@ -88,7 +95,7 @@ PieHandler.prototype = {
 	        },
 	        series: [{
 	            type: 'pie',
-	            name: graphData.chartText,
+	            name: graphData.text,
 	            data: graphValues
 	        }]
 	    });

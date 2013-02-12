@@ -4,6 +4,7 @@
  */
 $(function () {
 	
+	// graph data object to save graph preferences
 	var GraphData = {};
 	
 	/**
@@ -26,36 +27,44 @@ $(function () {
 		$(".container").removeClass("type1of2");
 	}
 	
-	function setGraphData(btn, year, graphHandler, name) {
+	/**
+	 * save the graph settings
+	 */
+	function setGraphData(btn, year, graphHandler) {
 		GraphData.type = $(btn).data('type');
 		GraphData.unit = $(btn).data('unit'); 
 		GraphData.text = $(btn).text();
 		GraphData.year = year;
 		GraphData.handler = graphHandler;
-		GraphData.name = name;
 		return GraphData;
 	}
-	
+		
 	/**
 	 * init event handler for button with specific api url
+	 * creates new instance of specific graph handler class
+	 * this reference points to the button dom object and has several data attributes
 	 */
 	function initEventListener() {
 	
 		$(".btn.monthSum").click(function() {
-			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/figures", "api/platform/figures"), "figures");
+			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/figures", "api/platform/figures"));
 			drawChart(graphData);
 		});
 		
 		$(".btn.monthAvg").click(function() {
-			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/averages", "api/platform/averages"), "averages");
+			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/averages", "api/platform/averages"));
 			drawChart(graphData);
 		});
 		
 		$(".btn.transportation").click(function() {
-			var graphData = setGraphData(this, '2012', new PieHandler("api/user/transportation", "api/platform/transportation"), "transportation");
+			var graphData = setGraphData(this, '2012', new PieHandler("api/user/transportation", "api/platform/transportation"));
 			drawChart(graphData);
 		});
-	
+		
+		$(".btn.advantages").click(function() {
+			var graphData = setGraphData(this, '2012', new GraphAdvHandler("api/user/figures", "api/user/advantages"));
+			drawChart(graphData);
+		});
 	}
 
 	/**
@@ -108,21 +117,26 @@ $(function () {
 				$friendList.append($("<li />").data("id", friendList[i].id).html(friendList[i].name));
 			}
 			$friendList.children().click(function() {
-				var friendId = $(this).data("id");
-				console.log("api/user/" + GraphData.name);
-				GraphData.handler.compareApiUrl = "api/user/" + GraphData.name; 
+				GraphData.friendId = $(this).data("id");
+				GraphData.handler.compareApiUrl = GraphData.handler.userApiUrl;
 				drawChart(GraphData);
 			});
 		});
 	}
 	
-	// initialize
-	initUserDetails();
-	initEventListener();
-	initNavigationListener();
-	initFriendList();
-	
-	//init default chart
-	$(".btn.monthSum").first().trigger('click');
-	
+	/**
+	 * init graph handler
+	 * draw default graph
+	 */
+	function init() {
+		// initialize
+		initUserDetails();
+		initEventListener();
+		initNavigationListener();
+		initFriendList();
+		
+		//draw default chart
+		$(".btn.monthSum").first().trigger('click');
+	}
+	init();
 });

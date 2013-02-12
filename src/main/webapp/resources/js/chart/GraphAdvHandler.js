@@ -23,25 +23,23 @@ GraphHandler.prototype = {
 	prepareData: function (graphData) {
 		var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 		
-		graphData.dataCategories = [];
 		graphData.prepUserData = [];
-		graphData.prepPlatformData = [];
+		graphData.prepBestData = [];
+		graphData.prepWorstData = [];
+		graphData.dataCategories = [];
 		
-		for (key in graphData.userData) {
+		debugger;
+		
+		for (key in graphData.compareData) {
 			// convert month integer 1-12 to Jan-Dez
-			graphData.dataCategories.push(monthList[graphData.userData[key][2] - 1]);
+			graphData.dataCategories.push(monthList[graphData.compareData[key][4] - 1]);
 			
 			// save property value for user
-			graphData.prepUserData.push(graphData.userData[key][0]);
-			
-			// save property value for platform sum
-			if (graphData.compareData[key]) {
-				graphData.prepPlatformData.push(graphData.compareData[key][0]);
-			} else {
-				graphData.prepPlatformData.push(0);
-			}
+			graphData.prepUserData.push(graphData.compareData[key][0]);
+			graphData.prepBestData.push(graphData.compareData[key][1]);
+			graphData.prepWorstData.push(graphData.compareData[key][2]);
+
 		}
-		
 		return graphData;
 	},
 
@@ -57,7 +55,7 @@ GraphHandler.prototype = {
 	            text: graphData.text
 	        },
 	        subtitle: {
-	            text: 'Monatsansicht für das Jahr ' + graphData.year
+	            text: 'Maximal mögiche Werte für das Jahr ' + graphData.year
 	        },
 	        xAxis: {
 	            categories: graphData.dataCategories
@@ -85,8 +83,11 @@ GraphHandler.prototype = {
 	                radius: 4
 	            }
 	        }, {
-	            name: 'Durchschnitt',
-	            data: graphData.prepPlatformData
+	            name: 'Maximale Variante',
+	            data: graphData.prepBestData
+	        }, {
+	            name: 'Minimale Variante',
+	            data: graphData.prepWorstData
 	        }]
 	    });
 	}
