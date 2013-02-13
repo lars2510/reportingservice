@@ -49,21 +49,25 @@ $(function () {
 		$(".btn.monthSum").click(function() {
 			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/figures", "api/platform/figures"));
 			drawChart(graphData);
+			$(".friend-list-hd").show();
 		});
 		
 		$(".btn.monthAvg").click(function() {
 			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/averages", "api/platform/averages"));
 			drawChart(graphData);
+			$(".friend-list-hd").show();
 		});
 		
 		$(".btn.transportation").click(function() {
 			var graphData = setGraphData(this, '2012', new PieHandler("api/user/transportation", "api/platform/transportation"));
 			drawChart(graphData);
+			$(".friend-list-hd").show();
 		});
 		
-		$(".btn.advantages").click(function() {
-			var graphData = setGraphData(this, '2012', new GraphAdvHandler("api/user/figures", "api/user/advantages"));
+		$(".btn.balance").click(function() {
+			var graphData = setGraphData(this, '2012', new BalanceHandler("api/user/balance", "api/user/balance"));
 			drawChart(graphData);
+			$(".friend-list-hd").hide();
 		});
 	}
 

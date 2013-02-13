@@ -31,7 +31,8 @@
 				<div class="subnav">
 					<ul>
 						<li class="btn monthSum" data-type="sumEcoImpact" data-unit="Gramm">Monatliche CO2-Emission</li>
-						<li class="btn monthAvg" data-type="sumEcoImpact" data-unit="Gramm">Durchschnitlliche CO2-Emission pro KM</li>
+						<li class="btn monthAvg" data-type="sumEcoImpact" data-unit="Gramm">Durchschnitlliche CO2-Emission</li>
+						<li class="btn balance" data-type="sumEcoImpact" data-unit="Gramm">CO2-Bilanz</li>
 						<li class="btn transportation" data-type="sumEcoImpact" data-unit="CO2-Emission in Gramm">Anteil der Verkehrsmittel</li>
 					</ul>
 				</div>
@@ -41,7 +42,7 @@
 				<div class="subnav">
 					<ul>
 						<li class="btn monthSum" data-type="sumCosts" data-unit="€">Monatliche Kosten</li>
-						<li class="btn monthAvg" data-type="sumCosts" data-unit="€">Durchschnittliche Kosten pro KM</li>
+						<li class="btn monthAvg" data-type="sumCosts" data-unit="€">Durchschnittliche Kosten</li>
 						<li class="btn transportation" data-type="sumCosts" data-unit="Reisekosten in €">Anteil der Verkehrsmittel</li>
 					</ul>			
 				</div>
@@ -79,6 +80,7 @@
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/jquery.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/lib/highcharts.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/chart/GraphHandler.js'/>"></script>
+	<script type="text/javascript" src="<c:url value='/resources/js/chart/BalanceHandler.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/chart/PieHandler.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/JinengoChart.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/resources/js/logic.js'/>"></script>

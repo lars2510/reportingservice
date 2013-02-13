@@ -77,8 +77,8 @@ public class UserApiController {
 		return keyFigures;
 	}
 	
-	@RequestMapping(value = "/advantages", method = RequestMethod.GET)
-	public @ResponseBody List<AggrUserFigure> getAdvantages(
+	@RequestMapping(value = "/balance", method = RequestMethod.GET)
+	public @ResponseBody List<AggrUserFigure> getBalance(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
 			@RequestParam(value="year", required = false, defaultValue = "2012") String year, 
 			@RequestParam(value="friendId", required = false, defaultValue = "") String friendId,
@@ -89,7 +89,7 @@ public class UserApiController {
 		int queryId = friendId.length() > 0 ? Integer.parseInt(friendId) : userDao.getUserId(principal.getName());
 		
 		if (queryId != -1) {
-			keyFigures = userFiguresDao.getAdvantages(queryId, keyFigure, Integer.parseInt(year));
+			keyFigures = userFiguresDao.getBalance(queryId, keyFigure, Integer.parseInt(year));
 		} else {
 			throw new SpringException("Der aktuell eingeloggte Nutzer besitzt keinen gültigen Jinengo Account!");
 		}

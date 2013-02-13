@@ -84,7 +84,7 @@ public class UserFiguresDao {
 	 * @param year
 	 * @return list - list of user figures
 	 */
-	public List<AggrUserFigure> getAdvantages(int userId, String keyFigure, int year) {
+	public List<AggrUserFigure> getBalance(int userId, String keyFigure, int year) {
 	
 		Session session = getSessionFactoryDw().openSession();
 		String keyColumn = StringEscapeUtils.escapeSql(keyFigure);
