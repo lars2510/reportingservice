@@ -50,17 +50,17 @@ BalanceHandler.prototype = {
 	            type: 'spline'
 	        },
 	        title: {
-	            text: graphData.text
+	            text: graphData.text + " für " + graphData.userName
 	        },
 	        subtitle: {
-	            text: 'CO2-Bilanz für das Jahr ' + graphData.year
+	            text: 'Jahr: ' + graphData.year
 	        },
 	        xAxis: {
 	            categories: graphData.dataCategories
 	        },
 	        yAxis: {
 	            title: {
-	                text: graphData.chartText + " (" + graphData.unit + ")"
+	                text: graphData.text + " (" + graphData.unit + ")"
 	            }
 	        },
 	        tooltip: {
@@ -90,7 +90,7 @@ BalanceHandler.prototype = {
                     enabled: false
                 }
             }, {
-            	name: 'Jinengo User',
+            	name: graphData.userName,
  	            data: graphData.prepUserData,
                 lineWidth: 3,
                 marker: {

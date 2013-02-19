@@ -23,10 +23,11 @@ PieHandler.prototype = {
 		$(".container").addClass("type1of2");
 		
 		// draw left pie
-		this.drawChart(preparedData, preparedData.prepUserData, 'container', 'Nutzer');
+		this.drawChart(preparedData, preparedData.prepUserData, 'container', graphData.userName);
 		
 		// draw right pie
-		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container', 'Plattformdurchschnitt');
+		var chartName = graphData.friendName ? graphData.friendName : 'Plattformdurchschnitt';
+		this.drawChart(preparedData, preparedData.prepCompareData, 'compare-container', chartName);
 	},
 	
 	// optional individual color setting 
@@ -67,7 +68,7 @@ PieHandler.prototype = {
 	},
 
 	// use highchart lib to draw the chart with the given data
-	drawChart: function (graphData, graphValues, container, kind) {
+	drawChart: function (graphData, graphValues, container, chartName) {
 		
 	    new Highcharts.Chart({
 	        chart: {
@@ -77,7 +78,7 @@ PieHandler.prototype = {
 	            plotShadow: true
 	        },
 	        title: {
-	            text: graphData.chartText + " <b>" + kind + "</b><br /> (" + graphData.unit + ")"
+	            text: graphData.text + " <b>" + chartName + "</b><br /> (" + graphData.unit + ")"
 	        },
 	        tooltip: {
 	            pointFormat: '{point.percentage}%',

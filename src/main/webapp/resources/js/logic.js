@@ -14,9 +14,13 @@ $(function () {
 		hideCompContainer();
 		$('.nav .categorie').removeClass("current");
 		
-		var jinengoChart = new JinengoChart(graphData);
+		// draw chart with a deep copy of the graph data
+		var graphDataCpy = $.extend(true, {}, graphData);
+		var jinengoChart = new JinengoChart(graphDataCpy);
 		jinengoChart.draw();
 		
+		// reset friend name
+		delete GraphData.friendName;
 	}
 	
 	/**
@@ -38,7 +42,12 @@ $(function () {
 		GraphData.handler = graphHandler;
 		return GraphData;
 	}
-		
+	
+	function resetFriendList() {
+		$(".friend-list-hd .headline").html("Vergleiche dich mit deinen Freunden");
+		$(".friend-list-hd").show();
+	}
+	
 	/**
 	 * init event handler for button with specific api url
 	 * creates new instance of specific graph handler class
@@ -49,25 +58,25 @@ $(function () {
 		$(".btn.monthSum").click(function() {
 			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/figures", "api/platform/figures"));
 			drawChart(graphData);
-			$(".friend-list-hd").show();
+			resetFriendList();
 		});
 		
 		$(".btn.monthAvg").click(function() {
 			var graphData = setGraphData(this, '2012', new GraphHandler("api/user/averages", "api/platform/averages"));
 			drawChart(graphData);
-			$(".friend-list-hd").show();
+			resetFriendList();
 		});
 		
 		$(".btn.transportation").click(function() {
 			var graphData = setGraphData(this, '2012', new PieHandler("api/user/transportation", "api/platform/transportation"));
 			drawChart(graphData);
-			$(".friend-list-hd").show();
+			resetFriendList();
 		});
 		
 		$(".btn.balance").click(function() {
 			var graphData = setGraphData(this, '2012', new BalanceHandler("api/user/balance", "api/user/balance"));
 			drawChart(graphData);
-			$(".friend-list-hd").hide();
+			resetFriendList();
 		});
 	}
 
@@ -102,12 +111,15 @@ $(function () {
 	}
 	
 	/**
-	 * ajax request to get user data like user name
+	 * ajax request to get user data like user name and trigger default chart
 	 */
-	function initUserDetails() {
+	function initMainData() {
 		$.getJSON('api/user/details', function(userData, status) {
 			$(".head h2").text("Hallo " + userData.name);
 			$(".head span").text("Registriert am: " + userData.timeRegistered);
+			GraphData.userName = userData.name;
+			//draw default chart
+			$(".btn.monthSum").first().trigger('click');
 		});
 	}
 	
@@ -122,7 +134,9 @@ $(function () {
 			}
 			$friendList.children().click(function() {
 				GraphData.friendId = $(this).data("id");
+				GraphData.friendName = $(this).html();
 				GraphData.handler.compareApiUrl = GraphData.handler.userApiUrl;
+				$(".friend-list-hd .headline").html("Vergleich mit: " + GraphData.friendName);
 				drawChart(GraphData);
 			});
 		});
@@ -132,15 +146,10 @@ $(function () {
 	 * init graph handler
 	 * draw default graph
 	 */
-	function init() {
-		// initialize
-		initUserDetails();
+	(function init() {
+		initMainData();
 		initEventListener();
 		initNavigationListener();
 		initFriendList();
-		
-		//draw default chart
-		$(".btn.monthSum").first().trigger('click');
-	}
-	init();
+	})();
 });

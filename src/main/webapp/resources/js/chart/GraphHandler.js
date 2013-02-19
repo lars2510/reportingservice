@@ -57,14 +57,14 @@ GraphHandler.prototype = {
 	            text: graphData.text
 	        },
 	        subtitle: {
-	            text: 'Monatsansicht für das Jahr ' + graphData.year
+	            text: 'Jahr: ' + graphData.year
 	        },
 	        xAxis: {
 	            categories: graphData.dataCategories
 	        },
 	        yAxis: {
 	            title: {
-	                text: graphData.chartText + " (" + graphData.unit + ")"
+	                text: graphData.text + " (" + graphData.unit + ")"
 	            },
 	            plotLines: [{
 	                value: 0,
@@ -78,14 +78,14 @@ GraphHandler.prototype = {
 	            valueDecimals: 1
 	        },
 	        series: [{
-	            name: 'Jinengo User',
+	            name: graphData.userName,
 	            data: graphData.prepUserData,
 	            lineWidth: 4,
 	            marker: {
 	                radius: 4
 	            }
 	        }, {
-	            name: 'Durchschnitt',
+	            name: graphData.friendName ? graphData.friendName : 'Durchschnitt',
 	            data: graphData.prepPlatformData
 	        }]
 	    });
