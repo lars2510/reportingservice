@@ -16,12 +16,17 @@ BalanceHandler.prototype = {
 		
 	// prepare data and start chart drawing
 	draw: function(graphData) {
+		$(".container").addClass("type1of2").addClass("differentSize");
+		$("#compare-container").show();
 		this.drawChart(this.prepareData(graphData));
 	},
 	
 	// prepare data to draw chart and set graph description
 	prepareData: function (graphData) {
-		var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+		var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+			minCO2 = 0,
+			maxCO2 = 0,
+			userCO2 = 0;
 		
 		graphData.prepUserData = [];
 		graphData.prepBestData = [];
@@ -32,12 +37,22 @@ BalanceHandler.prototype = {
 			// convert month integer 1-12 to Jan-Dez
 			graphData.dataCategories.push(monthList[graphData.userData[key][4] - 1]);
 			
+			userCO2 += graphData.userData[key][0];
+			minCO2 += graphData.userData[key][1];
+			maxCO2 += graphData.userData[key][2];
+			
 			// save property value for user
 			graphData.prepUserData.push(graphData.userData[key][0]);
 			graphData.prepBestData.push(graphData.userData[key][1]);
 			graphData.prepWorstData.push(graphData.userData[key][2]);
 
 		}
+		
+		var total = maxCO2 - minCO2,
+			advantage = maxCO2 - userCO2;
+		
+		graphData.savingPotential = parseInt(advantage / total * 100);
+		
 		return graphData;
 	},
 
@@ -106,6 +121,100 @@ BalanceHandler.prototype = {
                 }
             }]
 	    });
+		
+		// Meeter
+		new Highcharts.Chart({
+			
+		    chart: {
+		        renderTo: 'compare-container',
+		        type: 'gauge'
+		    },
+		    
+		    title: {
+		        text: 'Ausgeschöpftes <br />CO2-Einsparpotential'
+		    },
+		    
+		    pane: {
+		        startAngle: -150,
+		        endAngle: 150,
+		        background: [{
+		            backgroundColor: {
+		                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+		                stops: [
+		                    [0, '#FFF'],
+		                    [1, '#333']
+		                ]
+		            },
+		            borderWidth: 0,
+		            outerRadius: '109%'
+		        }, {
+		            backgroundColor: {
+		                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+		                stops: [
+		                    [0, '#333'],
+		                    [1, '#FFF']
+		                ]
+		            },
+		            borderWidth: 1,
+		            outerRadius: '107%'
+		        }, {
+		            // default background
+		        }, {
+		            backgroundColor: '#DDD',
+		            borderWidth: 0,
+		            outerRadius: '105%',
+		            innerRadius: '103%'
+		        }]
+		    },
+		       
+		    // the value axis
+		    yAxis: {
+		        min: 0,
+		        max: 100,
+		        
+		        minorTickInterval: 'auto',
+		        minorTickWidth: 1,
+		        minorTickLength: 10,
+		        minorTickPosition: 'inside',
+		        minorTickColor: '#666',
+		
+		        tickPixelInterval: 30,
+		        tickWidth: 2,
+		        tickPosition: 'inside',
+		        tickLength: 10,
+		        tickColor: '#666',
+	  
+		        labels: {
+		            step: 2,
+		            rotation: 'auto'
+		        },
+		        title: {
+		            text: '%'
+		        },
+		        plotBands: [{
+		            from: 0,
+		            to: 20,
+		            color: '#DF5353' // red
+		        }, {
+		            from: 20,
+		            to: 50,
+		            color: '#DDDF0D' // yellow
+		        }, {
+		            from: 50,
+		            to: 100,
+		            color: '#55BF3B' // green
+		        }]        
+		    },
+		
+		    series: [{
+		        name: 'Ausgeschöpftes CO2-Einsparpotential',
+		        data: [graphData.savingPotential],
+		        tooltip: {
+		            valueSuffix: ' %'
+		        }
+		    }]
+		
+		});
 	}
 };
 	

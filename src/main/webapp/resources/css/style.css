@@ -1,3 +1,6 @@
+/** AUTHOR Lars Schuettemeyer  **/
+
+/** BASIC **/
 body {
 	color: #555;
 	font-size: 14px;
@@ -18,9 +21,12 @@ a:visited {
 	-webkit-box-shadow: 0px 0px 5px 0px #AAA;
 	box-shadow: 0px 0px 5px 0px #AAA;
 	position: relative;
-	padding: 15px 15px 110px 15px;
+	padding: 15px 25px 110px 25px;
 	min-height: 520px;
 	overflow: hidden;
+}
+.right {
+	float: right;
 }
 ul {
     margin: 0 0 0 0;
@@ -28,9 +34,11 @@ ul {
 h2 {
 	margin: 8px 0 4px 0;
 }
+
+/** HEADER **/
 .head {
 	height: 80px;
-    margin: 0 0 0 20px;
+    margin: 0;
     overflow: hidden;
 }
 .head .left {
@@ -40,12 +48,17 @@ h2 {
 .head .right {
 	float: left;
 }
+/** NAVIGATION **/
+.nav-wrapper {
+	height: 48px;
+}
 .nav {
 	overflow: hidden;
 	position: absolute;
 	top: 95px;
-	left: 35px;
+	left: 25px;
 	z-index: 2;
+	padding-right: 170px;
 }
 .nav .subnav {
 	display: block;
@@ -93,6 +106,8 @@ h2 {
 	-moz-box-shadow: inset 0 2px 3px rgba(0,0,0, 0.2);
 	box-shadow: inset 0 2px 3px rgba(0,0,0, 0.2);
 }
+
+/** FRIEND LIST **/
 #friend-list {
 	height: 0;
 	overflow: hidden;
@@ -122,7 +137,7 @@ h2 {
 	height: 120px;
 }
 .friend-list-hd .headline {
-	padding: 10px 15px;
+	padding: 7px 15px;
 	background: #4572a7;
 	width: 120px;
 	margin: 0;
@@ -151,13 +166,14 @@ h2 {
 	-moz-box-shadow: inset 0 2px 3px rgba(0,0,0, 0.2);
 	box-shadow: inset 0 2px 3px rgba(0,0,0, 0.2);
 }
+
+/** BASIC ELEMS **/
 .categorie {
 	display: inline-block;
 	text-align: center;
 	float: left;
 	margin: 0;
 }
-
 .btn {
 	width: 120px;
 	background: #f5f5f5;
@@ -192,23 +208,37 @@ h2 {
 	display: none;
 }
 
+.container-wrapper {
+	overflow: hidden;
+	width: 100%;
+}
+
 .container {
-	top: 100px;
 	position: relative;
 	z-index: 1;
 	min-width: 400px;
 	height: 400px;
-	margin: 0 auto;
+	margin: 25px 0;
 }
 
 .container.type1of2 {
-	margin: 0;
 	width: 49%;
 	float: left;
 	border: 1px solid #ccc;
-	margin-right: 5px;
 	padding: 1px;
 }
+.container.type1of2:first-child {
+	margin-right: 5px;
+}
+.container.differentSize {
+	width: 31%;
+	min-width: 200px;
+}
+.container.differentSize:first-child {
+	min-width: 315px;
+	width: 67%;
+}
+
 .logout {
 	position: absolute;
 	top: 24px;
@@ -227,6 +257,7 @@ h2 {
 	display: block;
 }
 
+/** RESPONSIVE **/
 @media only screen and (max-width: 700px) {
 	body {
 		font-size: 14px;

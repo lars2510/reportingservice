@@ -28,7 +28,7 @@ $(function () {
 	 */
 	function hideCompContainer() {
 		$("#compare-container").hide();
-		$(".container").removeClass("type1of2");
+		$(".container").removeClass("type1of2").removeClass("differentSize");
 	}
 	
 	/**
@@ -76,7 +76,7 @@ $(function () {
 		$(".btn.balance").click(function() {
 			var graphData = setGraphData(this, '2012', new BalanceHandler("api/user/balance", "api/user/balance"));
 			drawChart(graphData);
-			resetFriendList();
+			$(".friend-list-hd").hide();
 		});
 	}
 
