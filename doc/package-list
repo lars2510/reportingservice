@@ -1,0 +1,7 @@
+com.jinengo.reporting.controller.api.platform
+com.jinengo.reporting.controller.api.user
+com.jinengo.reporting.controller.web
+com.jinengo.reporting.model.user
+com.jinengo.reporting.service.helper
+com.jinengo.reporting.service.platform
+com.jinengo.reporting.service.user

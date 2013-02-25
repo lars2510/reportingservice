@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * aggregated user figures model
+ * 
+ * @author lars schuettemeyer
+ *
+ */
 @Entity
 @Table(name = "V_AggrUserFigure")
 public class AggrUserFigure {

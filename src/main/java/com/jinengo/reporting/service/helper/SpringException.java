@@ -1,5 +1,11 @@
 package com.jinengo.reporting.service.helper;
 
+/**
+ * Spring runtime exception class
+ * 
+ * @author larsschuttemeyer
+ *
+ */
 public class SpringException extends RuntimeException{
 	
 	private static final long serialVersionUID = 1L;

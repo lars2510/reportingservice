@@ -20,6 +20,12 @@ import com.jinengo.reporting.controller.web.HomeController;
 import com.jinengo.reporting.model.user.JinengoUser;
 import com.jinengo.reporting.model.user.UserAuthenticationModel;
 
+/**
+ * User Data Access Obejct to get the user data from the database
+ * 
+ * @author lars schuettemeyer
+ *
+ */
 @Repository
 public class UserDao {
 	
@@ -83,7 +89,7 @@ public class UserDao {
 	/**
 	 * Get user details from jinengo database by id
 	 * 
-	 * @param userId
+	 * @param id
 	 * @return JinengoUser - jinengo user details, null if no user was found
 	 */
 	public JinengoUser getUserDetails(int id) {

@@ -13,7 +13,12 @@ import org.springframework.stereotype.Repository;
 import com.jinengo.reporting.model.user.AggrUserFigure;
 import com.jinengo.reporting.model.user.AggrUserFigurePerTransportation;
 
-
+/**
+ * User Figures Data Access Object
+ * 
+ * @author lars schuettemeyer
+ *
+ */
 @Repository
 public class UserFiguresDao {
 	
@@ -38,7 +43,8 @@ public class UserFiguresDao {
 						"from AggrUserFigure " +
 						"where jinengoUserID = :userId " +
 						"and year = :year " +
-						"group by year, month";
+						"group by year, month " +
+						"order by month";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
@@ -65,7 +71,8 @@ public class UserFiguresDao {
 						"from AggrUserFigure " +
 						"where jinengoUserID = :userId " +
 						"and year = :year " +
-						"group by year, month";
+						"group by year, month " +
+						"order by month";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);
@@ -93,7 +100,8 @@ public class UserFiguresDao {
 		String hql = "select " + keyColumn + ", " + keyColumnBest + " , " + keyColumnWorst + ", year, month " +
 						"from AggrUserFigure " +
 						"where jinengoUserID = :userId " +
-						"and year = :year";
+						"and year = :year " +
+						"order by month";
 		
 		Query query = session.createQuery(hql);
 		query.setParameter("userId", userId);

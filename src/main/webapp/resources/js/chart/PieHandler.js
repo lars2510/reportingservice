@@ -11,7 +11,7 @@ function PieHandler (userApiUrl, compareApiUrl) {
 	this.compareApiUrl = compareApiUrl;
 }
 
-//Extend the pie class prototybe object
+// extend the pie class prototybe object
 PieHandler.prototype = {
 
 	// prepare data and start chart drawing, change html class properties to draw two pies

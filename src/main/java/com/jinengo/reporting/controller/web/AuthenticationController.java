@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.jinengo.reporting.model.user.UserAuthenticationModel;
 import com.jinengo.reporting.service.user.UserDao;
 
+/**
+ * authentication controller
+ * 
+ * @author lars schuettemeyer
+ *
+ */
 @Controller
 public class AuthenticationController {
 
@@ -25,8 +31,6 @@ public class AuthenticationController {
 	/**
 	 * Create new User
 	 * 
-	 * @param userEmail
-	 * @param userPassword
 	 * @return List<AggrUserFigures>
 	 */
 	@RequestMapping(value = "/user/create", method = RequestMethod.GET)
@@ -36,7 +40,14 @@ public class AuthenticationController {
 		return "authentication/createUser";
 	}
 
-
+	/**
+	 * save a new user and passwort in database
+	 * 
+	 * @param userModel
+	 * @param result
+	 * @param model
+	 * @return view id
+	 */
 	@RequestMapping(value = "/user/savePassword", method = RequestMethod.POST)
 	public String savePassword(@Valid UserAuthenticationModel userModel, BindingResult result, Model model) {
 

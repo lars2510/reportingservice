@@ -1,7 +1,5 @@
 package com.jinengo.reporting.controller.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jinengo.reporting.service.user.UserFiguresDao;
 
 /**
- * Handles requests for the application home page.
+ * default controller
+ * handles requests for the application home page.
+ *  
+ * @author lars schuettemeyer
+ *
  */
 @Controller
 public class HomeController {
@@ -19,15 +21,13 @@ public class HomeController {
 	@Autowired
 	private UserFiguresDao aggrUserFiguresDao;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
 	/**
 	 * Mapping root url to home view an display welcome page
 	 * 
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView hello() {
+	public ModelAndView mainPage() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("p", "Willkommen");
 		modelAndView.setViewName("home");
@@ -38,7 +38,7 @@ public class HomeController {
 	/**
 	 * Mapping loggedout url to loggedout view
 	 * 
-	 * @return
+	 * @return view name
 	 */
 	@RequestMapping(value = "/loggedout", method = RequestMethod.GET)
 	public String handleForm() {
@@ -48,7 +48,7 @@ public class HomeController {
 	/**
 	 * Mapping timeout url timeout view
 	 * 
-	 * @return
+	 * @return view name
 	 */
 	@RequestMapping(value = "/timeout", method = RequestMethod.GET)
 	public String handleTimeout() {

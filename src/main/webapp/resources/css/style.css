@@ -37,12 +37,11 @@ h2 {
 
 /** HEADER **/
 .head {
-	height: 80px;
+	height: 55px;
     margin: 0;
     overflow: hidden;
 }
 .head .left {
-	width: 305px;
 	float: left;
 }
 .head .right {
@@ -55,7 +54,7 @@ h2 {
 .nav {
 	overflow: hidden;
 	position: absolute;
-	top: 95px;
+	top: 70px;
 	left: 25px;
 	z-index: 2;
 	padding-right: 170px;
@@ -218,7 +217,7 @@ h2 {
 	z-index: 1;
 	min-width: 400px;
 	height: 400px;
-	margin: 25px 0;
+	margin: 15px 0;
 }
 
 .container.type1of2 {

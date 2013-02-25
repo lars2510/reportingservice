@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +22,7 @@ import com.jinengo.reporting.service.user.UserFiguresDao;
  * Jinengo REST-API to deliver BI-Data to Client Applications via JSON-Response
  * 
  * Every URL Request {BaseUrl}/api/user is mapped to this controller
- * @author larsschuttemeyer
+ * @author lars schuettemeyer
  *
  */
 @Controller
@@ -36,7 +35,15 @@ public class UserApiController {
 	@Autowired
 	private UserDao userDao;
 	
-
+	/**
+	 * get key figures sum depending on the given key figure and year
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @param friendId
+	 * @param principal
+	 * @return List of KeyFigure sum for each month of the given year
+	 */
 	@RequestMapping(value = "/figures", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigure> getFigures(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
@@ -57,6 +64,15 @@ public class UserApiController {
 		return keyFigures;
 	}
 
+	/**
+	 * get average key figure values for a given key figure and year
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @param friendId
+	 * @param principal
+	 * @return List of KeyFigure average for each month of the given year
+	 */
 	@RequestMapping(value = "/averages", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigure> getAverages(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
@@ -77,6 +93,15 @@ public class UserApiController {
 		return keyFigures;
 	}
 	
+	/**
+	 * get advantages and disadvanteges for a given key figure and year
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @param friendId
+	 * @param principal
+	 * @return List of possible best and worst travel possibilities
+	 */
 	@RequestMapping(value = "/balance", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigure> getBalance(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
@@ -97,6 +122,16 @@ public class UserApiController {
 		return keyFigures;
 	}
 	
+	/**
+	 * get transportation data for a given key figure
+	 * 
+	 * @param keyFigure
+	 * @param year
+	 * @param month
+	 * @param friendId
+	 * @param principal
+	 * @return list of transportation key figures
+	 */
 	@RequestMapping(value = "/transportation", method = RequestMethod.GET)
 	public @ResponseBody List<AggrUserFigurePerTransportation> getTransportation(
 			@RequestParam(value="keyFigure", required = false, defaultValue = "sumEcoImpact") String keyFigure, 
@@ -118,6 +153,12 @@ public class UserApiController {
 		return keyFigures;
 	}
 	
+	/**
+	 * get user details depending on pricipal for the current logged in user
+	 * 
+	 * @param principal
+	 * @return user details
+	 */
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	public @ResponseBody JinengoUser getDetails(Principal principal) {
 		JinengoUser userDetails = userDao.getUserDetails(principal.getName());
@@ -129,6 +170,12 @@ public class UserApiController {
 		return userDetails;
 	}
 	
+	/** 
+	 * get user friend list
+	 * 
+	 * @param principal
+	 * @return list of userDetails of users friends
+	 */
 	@RequestMapping(value = "/friends", method = RequestMethod.GET)
 	public @ResponseBody ArrayList<JinengoUser> getFriends(Principal principal) {
 		ArrayList<JinengoUser> userFriends = userDao.getUserFriends(principal.getName());

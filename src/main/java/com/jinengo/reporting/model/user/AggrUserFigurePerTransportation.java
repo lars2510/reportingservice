@@ -4,7 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
+/**
+ * aggregated user figures per transportation
+ * 
+ * @author lars schuettemeyer
+ *
+ */
 @Entity
 @Table(name = "V_AggrUserFigurePerTransporation")
 public class AggrUserFigurePerTransportation {

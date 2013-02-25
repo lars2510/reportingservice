@@ -32,7 +32,7 @@ $(function () {
 	}
 	
 	/**
-	 * save the graph settings
+	 * Save the graph settings
 	 */
 	function setGraphData(btn, year, graphHandler) {
 		GraphData.type = $(btn).data('type');
@@ -43,6 +43,9 @@ $(function () {
 		return GraphData;
 	}
 	
+	/**
+	 * Reset friend html content
+	 */
 	function resetFriendList() {
 		$(".friend-list-hd .headline").html("Vergleiche dich mit deinen Freunden");
 		$(".friend-list-hd").show();
@@ -115,8 +118,8 @@ $(function () {
 	 */
 	function initMainData() {
 		$.getJSON('api/user/details', function(userData, status) {
-			$(".head h2").text("Hallo " + userData.name);
-			$(".head span").text("Registriert am: " + userData.timeRegistered);
+			$(".head h2").text("Hallo " + userData.name + "! Erfahre mehr über dein Fahrverhalten:");
+			
 			GraphData.userName = userData.name;
 			//draw default chart
 			$(".btn.monthSum").first().trigger('click');
@@ -128,10 +131,15 @@ $(function () {
 	 */
 	function initFriendList() {
 		$.getJSON('api/user/friends', function(friendList, status) {
+			// get the friend dom object
 			var $friendList = $("#friend-list");
+			
+			// add all friends to html list
 			for ( var i = 0; i < friendList.length; i++) {
 				$friendList.append($("<li />").data("id", friendList[i].id).html(friendList[i].name));
 			}
+			
+			// Event handler, draw compare chart depending on friend id if friend is clicked
 			$friendList.children().click(function() {
 				GraphData.friendId = $(this).data("id");
 				GraphData.friendName = $(this).html();
@@ -143,7 +151,7 @@ $(function () {
 	}
 	
 	/**
-	 * init graph handler
+	 * init graph handler by self invoking function
 	 * draw default graph
 	 */
 	(function init() {

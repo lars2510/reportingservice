@@ -38,6 +38,7 @@ var JinengoChart = function(graphData) {
 			friendData.friendId = graphData.friendId;
 		}
 		
+		// send ajax request to rest api an start drawing if data is received
 		$.when(
 			$.ajax({
 				url: graphData.handler.userApiUrl,

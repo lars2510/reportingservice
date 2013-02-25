@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Jinengo user details
+ * @author lars schuettemeyer
+ *
+ */
 @Entity
 @Table(name = "A_SOURCE_JinengoUser")
 public class JinengoUser {

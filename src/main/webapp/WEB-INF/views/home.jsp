@@ -17,7 +17,6 @@
 		<div class="head">
 			<div class="left">
 				<h2></h2>
-				<span></span>
 			</div>
 		</div>
 		<div class="nav-wrapper">
