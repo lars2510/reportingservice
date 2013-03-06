@@ -51,7 +51,7 @@ GraphHandler.prototype = {
 		new Highcharts.Chart({
 	        chart: {
 	            renderTo: 'container',
-	            type: 'spline'
+	            type: 'line'
 	        },
 	        title: {
 	            text: graphData.text
